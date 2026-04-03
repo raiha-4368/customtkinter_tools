@@ -23,7 +23,7 @@ simple_tool_tkinter/
 ├contdown  
 ├ .gitignore  
 ├ 環境構築  
-│		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納
+│		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納  
 └ README.md  
 
 </details>

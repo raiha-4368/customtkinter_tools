@@ -1,0 +1,16 @@
+#git管理に含めないものを記述することで、git管理外とする
+
+# Python
+__pycache__/
+*.pyc
+
+# logs
+*/logs/
+*.log
+
+# build(exeファイル以外はgit管理に含めない)
+*/build/
+main.spec
+
+# OS
+.DS_Store
