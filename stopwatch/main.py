@@ -15,7 +15,7 @@ class StopwatchApp(ctk.CTk):
     def __init__(self):
         super().__init__()
                 
-        self.configure()
+        self.configure(fg_color="#1a1a1a") # ウィンドウ全体の背景（暗め）
         self.title("Stopwatch App")
         self.geometry("400x300")
         # -------------------------
@@ -23,8 +23,22 @@ class StopwatchApp(ctk.CTk):
         # ctkでは親要素(master)は最初に引数に書く
         # fg_color="transparent"で透明化設定(親フレームの色を透けさせる)
         # -------------------------
-        self.main_frame = ctk.CTkFrame(master=self,fg_color="transparent")
-        self.main_frame.pack()
+        # self.card_frame = ctk.CTkFrame(master=self,fg_color="transparent")
+        # self.card_frame.pack()
+
+        # --- フローティング・カード ---
+        # corner_radiusで角を丸く、fg_colorで背景との差をつける
+        self.card_frame = ctk.CTkFrame(
+            master=self,
+            width=400,
+            height=280,
+            corner_radius=20,
+            fg_color="#2d2d2d",  # カードの色（少し明るめ）
+            border_width=1,
+            border_color="#3d3d3d"
+        )
+        self.card_frame.place(relx=0.5, rely=0.5, anchor="center") # 中央配置
+        self.card_frame.pack_propagate(False) # サイズ固定
 
         #初期表示
         self.create_widgets()
@@ -53,21 +67,47 @@ class StopwatchApp(ctk.CTk):
         self.after_id = None    #予約したアフター管理用ID
 
         # -------------------------
-        # mainフレーム内の要素
-        # -------------------------        
         # タイム表示
-        self.stopwatch_label = ctk.CTkLabel(self.main_frame, text="00:00.00", font=("Arial", 40))
+        # -------------------------        
+        self.stopwatch_label = ctk.CTkLabel(self.card_frame, text="00:00.00", font=("Courier", 50, "bold")) # 等幅フォント
         self.stopwatch_label.pack(pady=(50.50))
 
-        # start
-        self.start_button = ctk.CTkButton(self.main_frame, text="START", command=self.start, width=80, fg_color="#fa8072", text_color="#696969",border_width=0)
-        self.start_button.pack(side="left", padx=(20,0),expand=True)
-        # stop
-        self.stop_button = ctk.CTkButton(self.main_frame, text="STOP",command=self.stop, width=80, fg_color="#add8e6", text_color="#696969",border_width=0)
-        self.stop_button.pack(side="left", padx=(20,0),expand=True)
+        # -------------------------
+        # ボタン用フレーム
+        # -------------------------        
+        self.button_frame = ctk.CTkFrame(self.card_frame, fg_color="transparent")
+        self.button_frame.pack(pady=10)
 
+        # start stop押下時は無効
+        self.start_button = ctk.CTkButton(self.button_frame, text="START", command=self.start,
+                                            width=80,
+                                            height=40,
+                                            cursor="hand2", # 指カーソル
+                                            fg_color="#00FF00",
+                                            hover_color="#006400",
+                                            text_color="#FFFFFF",
+                                            border_width=0)
+        self.start_button.pack(side="left", padx=(20,0),expand=True)
+        # stop start押下時のみ有効
+        self.stop_button = ctk.CTkButton(self.button_frame, text="STOP",command=self.stop,
+                                            width=80, 
+                                            height=40,
+                                            cursor="hand2", # 指カーソル
+                                            fg_color="#20B2AA",
+                                            hover_color="#00008B",
+                                            text_color="#FFFFFF",
+                                            border_width=0,
+                                            state="disabled")
+        self.stop_button.pack(side="left", padx=(20,0),expand=True)
         # reset
-        self.reset_button = ctk.CTkButton(self.main_frame, text="RESET", command=self.reset, width=80, fg_color="#98fb98", text_color="#696969",border_width=0)
+        self.reset_button = ctk.CTkButton(self.button_frame, text="RESET", command=self.reset,
+                                            width=80,
+                                            height=40,
+                                            cursor="hand2", # 指カーソル
+                                            fg_color="#B22222",
+                                            hover_color="#8B0000",
+                                            text_color="#FFFFFF",
+                                            border_width=0)
         self.reset_button.pack(side="left", padx=(20,0),expand=True)
 
     def update_time(self):
@@ -85,7 +125,7 @@ class StopwatchApp(ctk.CTk):
             self.stopwatch_label.configure(text = time_str)
 
             #10ミリ秒後に自分を呼び出す(このidを持っている限り、after処理を行う)
-            self.after_id = self.main_frame.after(10, self.update_time)
+            self.after_id = self.card_frame.after(10, self.update_time)
 
     #startを押下してからの時刻を取得
     def start(self):
@@ -107,7 +147,7 @@ class StopwatchApp(ctk.CTk):
 
             #after_cancelで予約を取り消し、idを初期化(None)する
             if self.after_id:
-                self.main_frame.after_cancel(self.after_id)
+                self.card_frame.after_cancel(self.after_id)
                 self.after_id = None
             #トグルボタン(時刻を計測していない間、ボタンを無効にする)
             self.toggle_buttons("stopped")
