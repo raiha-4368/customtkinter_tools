@@ -1,0 +1,16 @@
+D:\git>cd custom_tkinter_tools
+
+D:\git\custom_tkinter_tools>pip install customtkinter
+Collecting customtkinter
+  Downloading customtkinter-5.2.2-py3-none-any.whl (296 kB)
+     ---------------------------------------- 296.1/296.1 kB 9.2 MB/s eta 0:00:00
+Collecting darkdetect
+  Downloading darkdetect-0.8.0-py3-none-any.whl (9.0 kB)
+Requirement already satisfied: packaging in c:\users\栗原有哉\appdata\local\programs\python\python310\lib\site-packages (from customtkinter) (26.0)
+Installing collected packages: darkdetect, customtkinter
+Successfully installed customtkinter-5.2.2 darkdetect-0.8.0
+
+[notice] A new release of pip available: 22.1.2 -> 26.0.1
+[notice] To update, run: python.exe -m pip install --upgrade pip
+
+D:\git\custom_tkinter_tools>
