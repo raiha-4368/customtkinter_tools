@@ -15,13 +15,14 @@
 - Tkinter
 
 ## 環境
-- Python 3.10 以上
+- Python 3.10 以上(pyファイル)
 - Windows(exeファイル)
 
 ## 起動及び使用手順
-main.exeファイルの実行
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行
-python main.py
+main.exeファイルの実行(windowsのみ)  
+
+もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行  
+python main.py(python環境必須)  
 
 ## フォルダ構成
 <details>
