@@ -84,6 +84,10 @@ favicon generator系(複数サイズ同時生成)
 このリポジトリに含むプログラムは個人開発したものです。  
 
 ## memo
+CustomTkinterのデザインに合わせたモダンなメッセージボックスを使いたい場合は、有志が作成した外部ライブラリ Akascape/CTkMessagebox を導入するのが定番です。   
+インストール: pip install CTkMessagebox  
+
+
 作るツール案
 ・TODOリスト  
 ・DBファイルビューア  
