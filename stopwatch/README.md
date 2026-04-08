@@ -1,5 +1,5 @@
 # Stopwatchアプリ
-## tkinterを使用したストップウォッチ
+## CustomTkinterを使用したストップウォッチ
 簡易ストップウォッチ
 
 ## 実行イメージ
