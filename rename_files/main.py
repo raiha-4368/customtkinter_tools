@@ -84,8 +84,6 @@ class RenameFilesApp(ctk.CTk):
         self.list_frame.pack(fill="both", expand=True)
         #履歴表示用リストボックス
         # ビフォー
-        # self.before_listbox = tk.Listbox(self.list_frame, width=50)
-        # self.before_listbox.pack(side="left",fill=ctk.BOTH, expand=True, padx=10, pady=5)
         self.listbox_before_frame = ctk.CTkScrollableFrame(self.list_frame, label_text="選択フォルダ内のリスト")
         self.listbox_before_frame.pack(side="left", padx=20, pady=20, fill="both", expand=True)
 
@@ -93,8 +91,6 @@ class RenameFilesApp(ctk.CTk):
         self.arrow_label = ctk.CTkLabel(self.list_frame, text="⇒",fg_color="#233B6C",text_color="#ffffff")
         self.arrow_label.pack(side="left", padx=(5,5))
         # アフター
-        # self.after_listbox = tk.Listbox(self.list_frame, width=50)
-        # self.after_listbox.pack(side="left",fill=ctk.BOTH, expand=True, padx=10, pady=5)
         self.listbox_after_frame = ctk.CTkScrollableFrame(self.list_frame, label_text="選択フォルダ内のリスト")
         self.listbox_after_frame.pack(side="left", padx=20, pady=20, fill="both", expand=True)
 
@@ -285,6 +281,7 @@ class RenameFilesApp(ctk.CTk):
         self.after_name = ""
         self.folder = None
         self.files = None
+        self.preview_result = []
 
         # 画面に表示したパスをクリア
         self.dir_path.configure(text="path:")
@@ -295,8 +292,6 @@ class RenameFilesApp(ctk.CTk):
         # listboxの初期化
         self.before_entry.delete(0,tk.END)
         self.after_entry.delete(0,tk.END)
-        # self.before_listbox.delete(0,tk.END)
-        # self.after_listbox.delete(0,tk.END)
 
         # リスト用のボタン削除
         for child in self.listbox_before_frame.winfo_children():          
