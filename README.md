@@ -3,24 +3,41 @@
 CustomTkinterを使用したシンプルなツール達をまとめたリポジトリ  
 Tkinterのみで作成したツールは別リポジトリでの管理としています。  
 
-
 ## 使用技術/環境/起動及び使用手順
 - それぞれのディレクトリ下にそれぞれ記載  
 
 ## Tools
  - contdown  
- 時間を設定し、0になるまで時間を計測するツール 
+ 時間を設定し、0になるまで時間を計測するツール    
 
-  - memo  
+- counter  
+ 数をカウントするシンプルなツール  
+
+ - csv_viewer  
+ csvファイルを開き、その内容を表示する(編集不可)    
+
+- extension_sort  
+ ディレクトリを選択し、その直下にあるファイルの拡張子ごとにフォルダに振り分けるツール   
+
+ - memo  
  テキストエリアに記述した内容を保存する/テキストファイルを開きその内容を表示、  
  変更内容を上書き保存できるツール    
 
-  - rename_files  
+ - pomodoro_timer  
+ ポモドーロのサイクル(25分作業5分休憩を4回繰り返す)を計ることができるツール    
+
+ - rename_files  
  ディレクトリを選択し、その直下にあるファイル名を一括で変更することができるツール    
 
- - stopwatch  
+- serial_number_files  
+ ディレクトリを選択し、その直下にあるフォルダ及びファイルに連番を付与することができるツール   
+
+- stopwatch  
  start/stop/resetができるストップウォッチ  
-   
+
+- text_extract  
+ 選択したファイル内から任意の文字列を含む行を検索し、抽出するツール  
+
 
 ## Custom tkinterのインストール
 以下コマンドを実行  
@@ -30,11 +47,17 @@ pip install customtkinter
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-simple_tool_tkinter/  
+custom_tkinter_tools/  
 ├contdown  
+├counter  
+├csv_viewer  
+├extension_sort  
 ├memo  
-├rename_files  
-├stopwatch  
+└pomodoro_timer  
+└rename_files  
+└serial_number_files  
+└stopwatch  
+└text_extract  
 ├ .gitignore  
 ├ 環境構築  
 │		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納  
