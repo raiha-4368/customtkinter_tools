@@ -26,7 +26,7 @@ class TextExtractApp(ctk.CTk):
         # フレーム生成
         # -------------------------
         self.main_frame = ctk.CTkFrame(self, fg_color="#191919")
-        self.main_frame.pack()
+        self.main_frame.pack(fill="both", expand=True)
 
         #初期表示
         self.create_main_frame()
@@ -109,18 +109,18 @@ class TextExtractApp(ctk.CTk):
         # text_area_frame
         # テキストエリア用フレーム
         self.text_area_frame = ctk.CTkFrame(self.main_frame, fg_color="#191919")
-        self.text_area_frame.pack()
+        self.text_area_frame.pack(fill="both", expand=True)
 
         # テキストエリア
         self.text_area_before = ctk.CTkTextbox(self.text_area_frame,state='disabled')
-        self.text_area_before.pack(side="left", pady=(20,20),padx=(20,20))
+        self.text_area_before.pack(side="left", pady=(20,20),padx=(20,20), fill="both", expand=True)
         # テキストエリアの大きさ調整の為コメントアウト。後でpack(width=50, height=50,expand=True, fill="both")
         # ⇒
         self.arrow_label = ctk.CTkLabel(self.text_area_frame, text="⇒",fg_color="#191919",text_color="#ffffff")
         self.arrow_label.pack(side="left", padx=(5,5))
         # 検索結果
         self.text_area_after = ctk.CTkTextbox(self.text_area_frame)
-        self.text_area_after.pack(side="left", pady=(20,20),padx=(20,20))
+        self.text_area_after.pack(side="left", pady=(20,20),padx=(20,20),fill="both", expand=True)
         # テキストエリアの大きさ調整の為コメントアウト。後でpack(width=50, height=50, expand=True, fill="both")
         # ***************************************************************************************************
         
