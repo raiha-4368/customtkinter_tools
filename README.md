@@ -48,16 +48,18 @@ pip install customtkinter
 <summary>フォルダ構成(折り畳み)  </summary>
 
 custom_tkinter_tools/  
-├contdown  
-├counter  
-├csv_viewer  
-├extension_sort  
-├memo  
-└pomodoro_timer  
-└rename_files  
-└serial_number_files  
-└stopwatch  
-└text_extract  
+├common						※共通処理
+└apps							※ツール  
+│├contdown  
+│├counter  
+│├csv_viewer  
+│├extension_sort  
+│├memo  
+│├pomodoro_timer  
+│├rename_files  
+│├serial_number_files  
+│├stopwatch  
+│├text_extract  
 ├ .gitignore  
 ├ 環境構築  
 │		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納  

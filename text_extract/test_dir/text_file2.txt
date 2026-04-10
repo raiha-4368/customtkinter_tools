@@ -1,4 +1,0 @@
-test  aaa
-test2 bbb
-ccc
-TEST DDD

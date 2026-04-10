@@ -5,15 +5,15 @@ __pycache__/
 *.pyc
 
 # logs
-*/logs/
+*/apps/logs/
 *.log
 
 # build(exeファイル以外はgit管理に含めない)
-*/build/
+*/apps/build/
 main.spec
 
 # 仮フォルダはgit管理に含めない
-*/temp/
+*/apps/temp/
 
 # 自分用メモはgit管理しない
 /memo.text
