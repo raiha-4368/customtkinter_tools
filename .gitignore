@@ -15,5 +15,8 @@ main.spec
 # 仮フォルダはgit管理に含めない
 */temp/
 
+# 自分用メモはgit管理しない
+*.memo
+
 # OS
 .DS_Store
