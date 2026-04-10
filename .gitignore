@@ -16,7 +16,7 @@ main.spec
 */apps/temp/
 
 # 自分用メモはgit管理しない
-/memo.text
+/memo.txt
 
 # OS
 .DS_Store
