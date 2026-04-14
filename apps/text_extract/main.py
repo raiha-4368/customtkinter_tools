@@ -2,7 +2,7 @@ from datetime import datetime
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
-from common import file, path_utils, dialogs
+from common import files, path_utils, dialogs
 
 # from common.path_utils import resource_path
 
@@ -158,7 +158,7 @@ class TextExtractApp(ctk.CTk):
             try:
                 # with open(self.filepath, mode='r', encoding="utf-8") as f:
                 #     content = f.read()
-                content, error = file.read_text_file(self.filepath)
+                content, error = files.read_text_file(self.filepath)
 
                 # print(content)
                 # テキストエリアを一度空にしてから読み込んだ内容を挿入
@@ -193,7 +193,7 @@ class TextExtractApp(ctk.CTk):
             return
 
         # 1行ずつファイル読み込み返却
-        content, error = file.read_line_file(self.filepath)
+        content, error = files.read_line_file(self.filepath)
 
         # enumerate → contentの中身を番号を返すようになる
         for i, line in enumerate(content, start=1):
@@ -262,14 +262,14 @@ class TextExtractApp(ctk.CTk):
             date = datetime.now().strftime("%Y%m%d_%H%M%S")
             
             # ファイルを保存
-            filepath = dialogs.seve_csv_file(filename=f"{self.get_word}_{date}.csv")
+            filepath = dialogs.save_csv_file(filename=f"{self.get_word}_{date}.csv")
 
             if filepath:
                 # カラム行作成
                 column = ["filepath","line_num","content"]
 
             #csvファイルへの書き込み
-            file.write_csv_file(filepath, column, self.result)
+            files.write_csv_file(filepath, column, self.result)
 
         except Exception as e:
             messagebox.showerror("エラー",e)

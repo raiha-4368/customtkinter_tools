@@ -3,6 +3,7 @@ import unicodedata
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
+from common import dialogs
 
 # 外観モードの設定（"System", "Dark", "Light"）
 # テーマカラーの設定（"blue", "green", "dark-blue"）
@@ -155,8 +156,11 @@ class SerialNumberFilesApp(ctk.CTk):
         # フォルダ選択時以外はTrueとなるようにしておく
         self.clear_flag = True
 
-        self.folder = filedialog.askdirectory()
+        # フォルダを開くダイアログ
+        self.folder = dialogs.select_folder()
+
         print(self.folder)
+
         if not self.folder:
           messagebox.showerror("エラー","フォルダが選択されていません。")
           return
@@ -306,9 +310,6 @@ class SerialNumberFilesApp(ctk.CTk):
             #ラジオボタンのリセット
             self.selected_value.set(2)
 
-        # listboxの初期化
-        # self.before_listbox.delete(0,tk.END)
-        # self.after_listbox.delete(0,tk.END)
         # リスト用のボタン削除
         for child in self.listbox_before_frame.winfo_children():          
             child.destroy()
