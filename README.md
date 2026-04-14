@@ -67,25 +67,43 @@ custom_tkinter_tools/
 
 </details>
 
+# 各ツールの実行方法
+プロジェクトルート(customtkinter_tools直下)で以下コマンドを実行
+ python -m apps.{対象のツール}.main
+
 # exe化方法(各フォルダ直下で実行)
-■pyinstallerのインストール  
+## pyinstallerのインストール  
 以下コマンドを実行  
 pip install pyinstaller   
 
-exe化の方法  
-1.以下コマンドを実行  
-pyinstaller main.py --onefile  --noconsole --icon=icon_01.ico
+## exe化の方法  
+1. 各ツールのディレクトリ下にあるmake_exe.batを実行  
+2. 作業ディレクトリ内にbuildディレクトリ/distディレクトリが作成  
+		dist以下にexeファイルが格納されている
+3. エラーになった場合  
+exeファイルが実行されない、処理が正常に実行されない等コンソール上のエラーを確認する際は  
+bat内ので実行されているコマンドpyinstallerのオプション--noconsoleの設定を外して実行  
+その後コンソールからmain.exeを実行すると、コンソールが表示されているのでエラーを確認できます  
 
-使用しそうなオプション  
+## batの中身  
+各ツールのディレクトリからプロジェクトルートに移動、pyinstallerコマンドを実行後、元のディレクトリに戻る処理   
+cd /d %~dp0\..\..
+pyinstaller apps/{対象のツール}/main.py --onefile  --noconsole --icon=apps/{対象のツール}/icon_01.ico --paths .
+cd /d %~dp0\apps\{対象のツール}  
+
+## 使用しそうなオプション  
 --onefileは1つのファイルにまとめる  
 --noconsoleはコンソールを表示しない  
 --icon=test.icoはアイコンを変更(*.iconファイルを同一ディレクトリに配置する)  
+--distpath C:path 任意のパスにexeを出力 or specファイルの編集  
+--hidden-import=customtkinter hidden-import問題が出た場合は使用するかもしれないオプション  
 
-2.作業ディレクトリ内にbuildディレクトリ/distディレクトリが作成される  
-distディレクトリ内にあるmain.exeをダブルクリックで実行出来るようになっている(筈)  
+※コマンドの補足  
+以下をプログラム上に記述することでプロジェクトルートでのexe化処理がやりやすくなるかも？(未実施)  
+"import sys
+import os
 
-3.エラーになった場合は  
-コンソールからmain.exeを実行し、エラーを確認する(--noconsoleを設定していると出ない可能性あるので注意)  
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))"
 
 # icon作成参考
 https://qiita.com/Kosen-amai/items/4700100342c76f9fda78  

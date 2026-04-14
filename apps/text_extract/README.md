@@ -49,21 +49,26 @@ D:/git/{filepath}/text_file2.txt,2,test2 bbb
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-memo/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─test_dir(テスト実行時に使用するファイル。)  
-│  └─test_01.txt    
-│  └─test_02.txt    
-├─docs  
-│  └01_extension_sort(初期画面).png (実行時のスクリーンショット各種)  
-│  └02_ ...  
-│  └icon_01.clip(変換前iconファイル)  
-│  └icon_01.png(同上)  
-├ main.py  
-└ icon_01.ico  
-└ README.md  
+apps  
+├─text_extract/  
+｜		├─build(build及びdistはexeファイル作成時に自動生成)  
+｜		├─dist  
+｜		│  └─main.exe  
+｜		├─test_dir(テスト実行時に使用するファイル。)  
+｜		│  └─test_01.txt    
+｜		│  └─test_02.txt    
+｜		├─docs  
+｜		│  └01_extension_sort(初期画面).png (実行時のスクリーンショット各種)  
+｜		│  └02_ ...  
+｜		│  └icon_01.clip(変換前iconファイル)  
+｜		│  └icon_01.png(同上)  
+｜		├ main.py  
+｜		└ icon_01.ico  
+｜		└ make_exe.bat  (windows用。実行するとdist以下にexeファイル作成)    
+｜		└ README.md  
+common
+└─共通処理用ディレクトリ  
+
 </details>
 
 ## 簡易設計
@@ -99,9 +104,13 @@ main.py
 ## version履歴
 - v1.0.0(2026-04-08)  
 	初回リリース  
-- v1.0.0(2026-04-09)  
+- v1.0.1(2026-04-09)  
 	textboxの大きさをframe全体に広げるように修正  
-
+- v1.2.0(2026-04-14)  
+  共通処理(common)の追加  
+  ファイル操作・ダイアログ処理の共通化  
+  内部ディレクトリ構成の整理  
+	
 ## 備考
 本ツールは個人開発アプリです。  
 

@@ -1,10 +1,12 @@
-import os
-import unicodedata
-import csv
 from datetime import datetime
 import tkinter as tk
 from tkinter import filedialog, messagebox
 import customtkinter as ctk
+from common import file, path_utils, dialogs
+
+# from common.path_utils import resource_path
+
+icon_path = path_utils.resource_path("apps/text_extract/icon_01.ico")
 
 # 外観モードの設定（"System", "Dark", "Light"）
 # テーマカラーの設定（"blue", "green", "dark-blue"）
@@ -149,21 +151,21 @@ class TextExtractApp(ctk.CTk):
         # 今までの入力値をクリア
         self.clear_data()
 
-        self.filepath = filedialog.askopenfilename(
-          defaultextension=".txt",
-          filetypes=[("All files", "*.*")],
-          title="ファイルを開く"
-      )
+        # ファイルを開く
+        self.filepath = dialogs.select_file()
+
         if self.filepath:
             try:
-                with open(self.filepath, mode='r', encoding="utf-8") as f:
-                    content = f.read()
-                    # print(content)
-                    # テキストエリアを一度空にしてから読み込んだ内容を挿入
-                    self.text_area_before.configure(state="normal")
-                    self.text_area_before.delete("1.0", "end") #1行目から最後まで削除
-                    self.text_area_before.insert("1.0", content) #1行目に挿入
-                    self.text_area_before.configure(state="disabled")
+                # with open(self.filepath, mode='r', encoding="utf-8") as f:
+                #     content = f.read()
+                content, error = file.read_text_file(self.filepath)
+
+                # print(content)
+                # テキストエリアを一度空にしてから読み込んだ内容を挿入
+                self.text_area_before.configure(state="normal")
+                self.text_area_before.delete("1.0", "end") #1行目から最後まで削除
+                self.text_area_before.insert("1.0", content) #1行目に挿入
+                self.text_area_before.configure(state="disabled")
 
                 # オプション 今開いているファイル名をタイトルに表示
                 self.title(f"Text Extract App - {self.filepath}")
@@ -190,11 +192,12 @@ class TextExtractApp(ctk.CTk):
             messagebox.showerror("エラー","検索対象文字が入力されていません。")
             return
 
-        # 読み込みモードr
-        with open(self.filepath, 'r',encoding='utf-8') as f:
-            # 新しい処理
-            for i, line in enumerate(f, start=1):
-                self.line_search(i,line.strip())
+        # 1行ずつファイル読み込み返却
+        content, error = file.read_line_file(self.filepath)
+
+        # enumerate → contentの中身を番号を返すようになる
+        for i, line in enumerate(content, start=1):
+            self.line_search(i,line.strip())
 
         # ファイルの読み込み終了後
         # テキストエリアを書き込める状態にし、既存内容を削除
@@ -258,28 +261,18 @@ class TextExtractApp(ctk.CTk):
             # 時刻取得
             date = datetime.now().strftime("%Y%m%d_%H%M%S")
             
-            filepath = filedialog.asksaveasfilename(
-                defaultextension = ".csc",
-                initialfile=f"{self.get_word}_{date}.csv", 
-                filetypes=[("csv files", "*.csv")],
-                title="textファイルを保存"
-                )
+            # ファイルを保存
+            filepath = dialogs.seve_csv_file(filename=f"{self.get_word}_{date}.csv")
+
             if filepath:
                 # カラム行作成
                 column = ["filepath","line_num","content"]
 
-            #新規書き込みw,追記モードaで使い分け
-                with open(filepath, mode='w', newline="", encoding="utf-8") as f:
-                    writer = csv.writer(f)
-                    # ヘッダー書き込み
-                    writer.writerow(column)
-                    # resultの書き込み
-                    for row in self.result:
-                        writer.writerow(row)
+            #csvファイルへの書き込み
+            file.write_csv_file(filepath, column, self.result)
 
         except Exception as e:
             messagebox.showerror("エラー",e)
-
        
     #クリア処理
     def clear_data(self):

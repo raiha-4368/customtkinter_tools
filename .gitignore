@@ -12,6 +12,10 @@ __pycache__/
 */apps/build/
 main.spec
 
+# プロジェクトルートのdistとbuildはgit管理に含めない
+/dist/
+/build/
+
 # 仮フォルダはgit管理に含めない
 */apps/temp/
 
