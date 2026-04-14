@@ -48,7 +48,7 @@ pip install customtkinter
 <summary>フォルダ構成(折り畳み)  </summary>
 
 custom_tkinter_tools/  
-├common						※共通処理
+├common						※共通処理  
 └apps							※ツール  
 │├contdown  
 │├counter  
@@ -71,12 +71,12 @@ custom_tkinter_tools/
 プロジェクトルート(customtkinter_tools直下)で以下コマンドを実行
  python -m apps.{対象のツール}.main
 
-# exe化方法(各フォルダ直下で実行)
+# exe化について
 ## pyinstallerのインストール  
 以下コマンドを実行  
 pip install pyinstaller   
 
-## exe化の方法  
+## exe化  
 1. 各ツールのディレクトリ下にあるmake_exe.batを実行  
 2. 作業ディレクトリ内にbuildディレクトリ/distディレクトリが作成  
 		dist以下にexeファイルが格納されている
@@ -87,8 +87,8 @@ bat内ので実行されているコマンドpyinstallerのオプション--noco
 
 ## batの中身  
 各ツールのディレクトリからプロジェクトルートに移動、pyinstallerコマンドを実行後、元のディレクトリに戻る処理   
-cd /d %~dp0\..\..
-pyinstaller apps/{対象のツール}/main.py --onefile  --noconsole --icon=apps/{対象のツール}/icon_01.ico --paths .
+cd /d %~dp0\..\..  
+pyinstaller apps/{対象のツール}/main.py --onefile  --noconsole --icon=apps/{対象のツール}/icon_01.ico --paths .  
 cd /d %~dp0\apps\{対象のツール}  
 
 ## 使用しそうなオプション  
