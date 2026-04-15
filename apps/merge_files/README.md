@@ -6,10 +6,11 @@
 
 ## 実行イメージ
 ### 実行画面
-![実行画面01](docs/01_text_extract(初期画面).png)
-![実行画面02](docs/02_text_extract(ファイル選択).png)
-![実行画面03](docs/03_text_extract(検索開始).png)
-![実行画面04](docs/04_text_extract(ファイルへ出力).png)
+![実行画面01](docs/01_merge_files(初期画面).png)
+![実行画面02](docs/02_merge_files(1つ目のファイルを選択).png)
+![実行画面03](docs/03_merge_files(2つ目のファイルを選択).png)
+![実行画面04](docs/04_merge_files(逆転).png)
+![実行画面04](docs/05_merge_files(ファイルへ出力).png)
 
 ## できること
 - 2つまでファイルを選択し、そのファイルの記述内容を表示する。2つ選択した場合は改行コード(\n)を挿入し、1つのテキストボックスに表示する。  
