@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 
 # ファイルの読み込み
 def read_text_file(filepath):
@@ -26,4 +27,16 @@ def write_csv_file(filepath, column, content):
         # resultの書き込み
         for row in content:
             writer.writerow(row)
-        return
+    return
+
+# txt形式でファイルへの書き込み
+def write_txt_file(filepath, content):
+    #新規書き込みw,追記モードaで使い分け
+    with open(filepath, mode='w', newline="", encoding="utf-8") as f:
+        f.write(content)
+    return
+
+# ファイルの削除
+def remove_file(filepath):
+    # Pathを渡して削除する(missing_ok=Trueでファイルがなくてもエラーにしない)
+    Path(filepath).unlink(missing_ok=True)

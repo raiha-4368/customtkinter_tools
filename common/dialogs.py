@@ -27,12 +27,26 @@ def select_text_file():
 
 
 # csvファイルとして保存
-def save_csv_file(filetypes=(("csv files", "*.csv"),), title="ファイル保存", filename="text_extract_output.csv") -> str:
+def save_csv_file(filetypes=(("csv files", "*.csv"),), title="ファイル保存", filename="output.csv") -> str:
       root = tk.Tk()
       root.withdraw() # メインウィンドウ非表示
 
       filepath = filedialog.asksaveasfilename(
-      defaultextension = ".csc",
+      defaultextension = ".csv",
+      initialfile=filename, 
+      filetypes=filetypes,
+      title=title
+      )
+      root.destroy()
+      return filepath
+
+# txtファイルとして保存
+def save_txt_file(filetypes=(("text files", "*.txt"),), title="ファイル保存", filename="output.txt") -> str:
+      root = tk.Tk()
+      root.withdraw() # メインウィンドウ非表示
+
+      filepath = filedialog.asksaveasfilename(
+      defaultextension = ".txt",
       initialfile=filename, 
       filetypes=filetypes,
       title=title
