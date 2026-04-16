@@ -29,8 +29,10 @@
 
 ## 起動及び使用手順
 main.exeファイルの実行
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行
-python main.py
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.merge_files.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
 
 1. "1つ目のファイルを選択"ボタンを押下でファイルを開くダイアログが開きファイルを選択。
 テキストボックス欄に選択したファイル内容が表示される。  
@@ -46,7 +48,7 @@ python main.py
 <summary>フォルダ構成(折り畳み)  </summary>
 
 apps  
-├─text_extract/  
+├─merge_files/  
 ｜		├─build(build及びdistはexeファイル作成時に自動生成)  
 ｜		├─dist  
 ｜		│  └─main.exe  
@@ -54,7 +56,7 @@ apps
 ｜		│  └─test_01.txt    
 ｜		│  └─test_02.txt    
 ｜		├─docs  
-｜		│  └01_extension_sort(初期画面).png (実行時のスクリーンショット各種)  
+｜		│  └01_merge_files(初期画面).png (実行時のスクリーンショット各種)  
 ｜		│  └02_ ...  
 ｜		│  └icon_01.clip(変換前iconファイル)  
 ｜		│  └icon_01.png(同上)  

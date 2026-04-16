@@ -2,7 +2,6 @@
 ## CustomTkinterを使用したポモドーロタイマーアプリケーション
 25分作業 + 5分休憩を繰り返すシンプルなポモドーロタイマーです。
 
-
 ## 実行イメージ
 ### 実行画面
 ![実行画面](docs/01_pomodoro.png)
@@ -24,9 +23,11 @@
 - Windows(exeファイル)
 
 ## 起動及び使用手順
-main.exeファイルの実行  
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行  
-python main.py  
+main.exeファイルの実行
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.merge_files.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
 
 1. startボタンを押す  
 2. 作業開始  
@@ -37,16 +38,19 @@ python main.py
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-counter_tkinter/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─docs  
-│  └─01_pomodoro.png (実行時のスクリーンショット各種)  
-│	 └─icon_01.ico  
-│  └─icon用.png  
-├ main.py  
-└ README.md  
+apps  
+├─pomodoro_timer/  
+│		├─build(build及びdistはexeファイル作成時に自動生成)  
+│		├─dist  
+│		│  └─main.exe  
+│		├─docs  
+│		│  └─01_pomodoro.png (実行時のスクリーンショット各種)  
+│		│	 └─icon_01.ico  
+│		│  └─icon用.png  
+│		├ main.py  
+│		└ README.md  
+common  
+└─共通処理用ディレクトリ  
 
 </details>
 

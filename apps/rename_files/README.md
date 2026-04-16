@@ -26,8 +26,10 @@
 
 ## 起動及び使用手順
 main.exeファイルの実行
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行
-python main.py
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.merge_files.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
 
 1. "フォルダ選択"ボタンを押下  
 2. ダイアログでフォルダを選択。左側のリストボックスにそのフォルダ下にあるファイルの一覧が表示されます。  
@@ -43,21 +45,24 @@ python main.py
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-memo/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─test_dir(テスト実行時の確認用ディレクトリ。リネーム実行用のテキストファイル入り)  
-│  └─test_01.txt    
-│  └─test_02...     
-├─docs  
-│  └01_rename_file(初期画面).png (実行時のスクリーンショット各種)  
-│  └02_ ...  
-│  └icon_01.clip(変換前iconファイル)  
-│  └icon_01.png(同上)  
-├ main.py  
-└ icon_01.ico  
-└ README.md  
+apps  
+├─rename_files/  
+│		├─build(build及びdistはexeファイル作成時に自動生成)  
+│		├─dist  
+│		│  └─main.exe  
+│		├─test_dir(テスト実行時の確認用ディレクトリ。リネーム実行用のテキストファイル入り)  
+│		│  └─test_01.txt    
+│		│  └─test_02...     
+│		├─docs  
+│		│  └01_rename_file(初期画面).png (実行時のスクリーンショット各種)  
+│		│  └02_ ...  
+│		│  └icon_01.clip(変換前iconファイル)  
+│		│  └icon_01.png(同上)  
+│		├ main.py  
+│		└ icon_01.ico  
+│		└ README.md  
+common  
+└─共通処理用ディレクトリ  
 </details>
 
 ## 簡易設計

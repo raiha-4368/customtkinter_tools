@@ -1,5 +1,5 @@
 # CountdoenTimerアプリ
-## tkinterを使用したカウントダウンタイマー
+## CustomTkinterを使用したカウントダウンタイマー
 簡易タイマーツール  
 1秒～59分(想定)設定し、時間を計測できます。    
 
@@ -23,26 +23,33 @@
 
 
 ## 起動及び使用手順
-main.exeファイルの実行
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行
-python main.py
+main.exeファイルの実行  
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.countdown.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
+
 
 ## フォルダ構成
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-stopwatch/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─docs  
-│  └01_countdown(未入力).png (実行時のスクリーンショット各種)  
-│  └02_ ...  
-│  └icon_01.clip(変換前iconファイル)  
-│  └icon_01.png(同上)  
-├ main.py  
-└ icon_01.ico  
-└ README.md  
+apps/  
+├─countdown/  
+│		├─build(build及びdistはexeファイル作成時に自動生成)  
+│		├─dist  
+│		│  └─main.exe  
+│		├─docs  
+│		│  └01_countdown(未入力).png (実行時のスクリーンショット各種)  
+│		│  └02_ ...  
+│		│  └icon_01.clip(変換前iconファイル)  
+│		│  └icon_01.png(同上)  
+│		├ main.py  
+│		└ icon_01.ico  
+│		└ README.md  
+common/  
+└─共通処理用ディレクトリ  
+
 </details>
 
 ## 簡易設計

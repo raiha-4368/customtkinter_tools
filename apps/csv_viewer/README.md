@@ -1,5 +1,5 @@
 # CSVビューアアプリ
-## tkinterを使用したCSVビューアアプリケーション
+## CUstomTkinterを使用したCSVビューアアプリケーション
 csvファイルのビューア用アプリです。
 ※csvファイルは見出し行と列が対応している前提です。
 
@@ -23,9 +23,12 @@ csvファイルのビューア用アプリです。
 
 
 ## 起動及び使用手順
-main.exeファイルの実行  
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行  
-python main.py  
+main.exeファイルの実行
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.csv_viewer.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
+
 
 1. ファイルを選択ボタンを押す  
 2. ファイルを選択  
@@ -37,18 +40,21 @@ python main.py
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-csv_viewer/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─docs  
-│  └─01_csv_viewer.png (実行時のスクリーンショット各種)  
-│  └─  ...  
-│  └icon_01.clip(変換前iconファイル)  
-│  └icon_01.png(同上)  
-├ main.py  
-└ icon_01.ico  
-└ README.md  
+apps  
+├─csv_viewer/  
+│		├─build(build及びdistはexeファイル作成時に自動生成)  
+│		├─dist  
+│		│  └─main.exe  
+│		├─docs  
+│		│  └─01_csv_viewer.png (実行時のスクリーンショット各種)  
+│		│  └─  ...  
+│		│  └icon_01.clip(変換前iconファイル)  
+│		│  └icon_01.png(同上)  
+│		├ main.py  
+│		└ icon_01.ico  
+│		└ README.md  
+common  
+└─共通処理用ディレクトリ  
 
 </details>
 

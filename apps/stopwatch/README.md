@@ -19,25 +19,31 @@
 - Windows(exeファイル)
 
 ## 起動及び使用手順
-main.exeファイルの実行(windowsのみ)  
-もしくはコマンドプロンプト(対象ディレクトリ下)で以下コマンドを実行
-python main.py(python環境必須)  
+main.exeファイルの実行
+もしくはコマンドプロンプト(プロジェクトルート)で以下コマンドを実行  
+python -m apps.merge_files.main  
+
+※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
 
 ## フォルダ構成
 <details>
 <summary>フォルダ構成(折り畳み)  </summary>
 
-stopwatch/  
-├─build(build及びdistはexeファイル作成時に自動生成)  
-├─dist  
-│  └─main.exe  
-├─docs  
-│  └─01_count.png (実行時のスクリーンショット各種)  
-│  └icon_01.clip(変換前iconファイル)  
-│  └icon_01.png(同上)  
-├ main.py  
-└ icon_01.ico  
-└ README.md  
+apps  
+├─stopwatch/  
+│		├─build(build及びdistはexeファイル作成時に自動生成)  
+│		├─dist  
+│		│  └─main.exe  
+│		├─docs  
+│		│  └─01_stopwatch.png (実行時のスクリーンショット各種)  
+│		│  └icon_01.clip(変換前iconファイル)  
+│		│  └icon_01.png(同上)  
+│		├ main.py  
+│		└ icon_01.ico  
+│		└ README.md  
+common  
+└─共通処理用ディレクトリ  
+
 </details>
 
 ## 簡易設計

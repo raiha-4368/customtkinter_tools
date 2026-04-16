@@ -308,7 +308,7 @@ class FileMergeApp(ctk.CTk):
         self.chk_delete_state.set(False)
 
         # 編集可否のクリア
-        self.edit_button.configure(text="編集不可")
+        self.edit_button.configure(text="編集不可",fg_color="#8b0000",hover_color="#b22222")
         self.edit_flag = False
 
 
