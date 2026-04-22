@@ -5,10 +5,9 @@ csvファイルの整形(空白、改行、タブの削除)を行うツール
 ## 実行イメージ
 ### 実行画面
 ![実行画面01](docs/01_csv_formatter(初期画面).png)
-![実行画面02](docs/02_csv_formatter(1つ目のファイルを選択).png)
-![実行画面03](docs/03_csv_formatter(2つ目のファイルを選択).png)
-![実行画面04](docs/04_csv_formatter(逆転).png)
-![実行画面04](docs/05_csv_formatter(ファイルへ出力).png)
+![実行画面02](docs/02_csv_formatter(ファイル選択).png)
+![実行画面03](docs/03_csv_formatter(空白改行削除).png)
+![実行画面04](docs/04_csv_formatter(ファイルへ出力).png)
 
 ## できること
 - csvファイルの選択、改行及びタブコードを可視化した状態でのプレビュー
