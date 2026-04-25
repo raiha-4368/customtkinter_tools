@@ -1,10 +1,10 @@
 import sys
 import os
-from datetime import datetime
 import tkinter as tk
+from tkinter import ttk
 from tkinter import messagebox
 import customtkinter as ctk
-from common import files, dialogs
+from common import dialogs
 import logging
 from logging.handlers import RotatingFileHandler
 import sqlite3
@@ -260,7 +260,7 @@ class SqlPage(ctk.CTkFrame):
         self.sql_label = ctk.CTkLabel(self.sql_frame, text="SQL:このページではCREATE TABLEのsqlの実行をしてください",width=500, anchor="w")
         self.sql_label.pack(pady=(10,10),fill="x")
 
-        self.sql_command = ctk.CTkTextbox(self.sql_frame,width=500)
+        self.sql_command = ctk.CTkTextbox(self.sql_frame,width=500, font=("Meiryo", 20))
         self.sql_command.pack(pady=(10,10))
 
         self.start_sql = ctk.CTkButton(self.sql_frame, text="実行",command=self.textbox_sql)
@@ -273,9 +273,6 @@ class SqlPage(ctk.CTkFrame):
         self.list_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.list_frame.pack(fill="both", expand=True)
 
-        # プレビュー結果
-        # self.merge_textbox = ctk.CTkTextbox(self.textbox_frame)
-        # self.merge_textbox.pack(side="left", pady=(20,20),padx=(20,20),fill="both", expand=True)
         # テーブルの一覧
         self.table_list = ctk.CTkScrollableFrame(self.list_frame, label_text="選択フォルダ内のテーブルリスト")
         self.table_list.pack(side="left", padx=20, pady=20, fill="both", expand=True)
@@ -387,9 +384,68 @@ class ResultPage(ctk.CTkFrame):
         self.list_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.list_frame.pack(fill="both", expand=True)
 
-        # テーブル情報の表示
-        self.table_list = ctk.CTkScrollableFrame(self.list_frame, label_text="テーブル構造とSELECT結果")
-        self.table_list.pack(side="left", padx=20, pady=20, fill="both", expand=True)
+        self.treename_lable = ctk.CTkLabel(self.list_frame, text="テーブル構造")
+        self.treename_lable.pack(padx=(20,20),pady=(20,20))
+
+        # Treeview
+        self.treeview = ttk.Treeview(self.list_frame, show="headings")
+        self.treeview.pack(padx=(20,20))
+        # スクロールバー設定
+        scrollbar = ttk.Scrollbar(self.list_frame, orient="vertical", command=self.treeview.yview)
+        self.treeview.configure(yscrollcommand=scrollbar.set)
+
+        self.treename_lable2 = ctk.CTkLabel(self.list_frame, text="テーブル内データ")
+        self.treename_lable2.pack(padx=(20,20),pady=(20,20))
+
+        # Treeview2
+        self.treeview2 = ttk.Treeview(self.list_frame, show="headings")
+        self.treeview2.pack(padx=(20,20))
+        # スクロールバー設定
+        scrollbar = ttk.Scrollbar(self.list_frame, orient="vertical", command=self.treeview.yview)
+        self.treeview2.configure(yscrollcommand=scrollbar.set)
+
+        style = ttk.Style()
+        # テーマ設定(後で設定すると上書きされる)
+        style.theme_use("default")
+        # 見出し部分のフォント変更
+        style.configure("Treeview.Heading",
+                        font=("Meirio", 20, "bold"),     # フォントタイプ、文字サイズ
+                        background="#323232",          # 全体の背景色
+                        foreground="white")              # 文字の色
+        
+        # データ部分のフォントサイズ変更
+        style.configure("Treeview",
+                        font=(None, 16),                # フォントタイプ、文字サイズ
+                        background="#696969",         # 全体の背景色
+                        foreground="white",             # 文字の色
+                        fieldbackground="#808080")   # データがない部分の色
+
+        # 選択時の色
+        style.map("Treeview",
+                  background=[('selected', "#347083")],
+                  foreground=[("selected", 'white')])
+
+
+        # 特定行のみ色を変える例
+        # # 1. タグに色を設定しておく
+        # tree.tag_configure('alert', background='red', foreground='white')
+        # tree.tag_configure('even', background='#e1e1e1')
+
+        # # 2. データを追加する時に、そのタグを割り当てる
+        # tree.insert("", "end", values=("001", "重要データ"), tags=("alert",))
+        # tree.insert("", "end", values=("002", "通常データ"), tags=("even",))
+
+        # ストライプの表の例
+        # for i in range(10):
+        #     tag = "even" if i % 2 == 0 else "odd"
+        #     tree.insert("", "end", values=(i, "データ"), tags=(tag,))
+
+        #     tree.tag_configure("even", background="#ffffff")
+        #     tree.tag_configure("odd", background="#f9f9f9")
+
+        # # テーブル情報の表示
+        # self.table_list = ctk.CTkScrollableFrame(self.list_frame, label_text="テーブル構造とSELECT結果")
+        # self.table_list.pack(side="left", padx=20, pady=20, fill="both", expand=True)
 
         # ***************************************************************************************************
 
@@ -398,7 +454,7 @@ class ResultPage(ctk.CTkFrame):
         self.button_frame = ctk.CTkFrame(self,fg_color="transparent")
         self.button_frame.pack()# 切り替え
         ctk.CTkButton(self.button_frame, text="戻る", 
-                      command=lambda: controller.show_frame("SqlPage")).pack()
+                      command=lambda: controller.show_frame("SqlPage")).pack(padx=(20,20),pady=(20,20))
         # ***************************************************************************************************
 
     # 画面切り替え時の画面更新
@@ -410,9 +466,9 @@ class ResultPage(ctk.CTkFrame):
         self.update_listbox()
     
     def update_listbox(self):
-        # リスト用のボタン削除
-        for child in self.table_list.winfo_children():          
-            child.destroy()
+        # # リスト用のボタン削除
+        # for child in self.table_list.winfo_children():          
+        #     child.destroy()
 
         self.show_structure()
 
@@ -425,41 +481,96 @@ class ResultPage(ctk.CTkFrame):
 
         if not structure:
             return
-        
-        # 見出し
-        header = ctk.CTkLabel(self.table_list, text=f"---  {state['selected_table']}テーブル構造  ---", anchor="w")
-        header.pack(fill="x")
 
+        # textboxへの処理はコメントアウト        
+        # # 見出し
+        # header = ctk.CTkLabel(self.table_list, text=f"---  {state['selected_table']}テーブル構造  ---", anchor="w")
+        # header.pack(fill="x")
+
+        # for col in structure:
+        #     text = f"{col['name']} ({col['type']})"
+        #     label = ctk.CTkLabel(self.table_list, text=text, anchor="w")
+        #     label.pack(fill="x")
+
+        # 既存データをすべて削除
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
+
+        #2 カラムの設定             
+        columns = ["要素名","型"]
+            
+        self.treeview['columns'] = columns
+        # ID列を表示しない設定
+        self.treeview['show'] = 'headings'  
+
+        # 列の見出し(ヘッダー)を設定
+        for col in columns:
+            self.treeview.heading(col, text=col)
+            self.treeview.column(col, width=100, anchor='w')   #anchor='w'で左寄せ
+            
+        #データの挿入 (parent="", index="end")
         for col in structure:
-            text = f"{col['name']} ({col['type']})"
-            label = ctk.CTkLabel(self.table_list, text=text, anchor="w")
-            label.pack(fill="x")
+                # 辞書型(values)をリスト変換して渡す
+                # values = [r.get(col, "-") for col in columns] r.get(col)で取得できなかった時"-"を入れるという処理⇒失敗
+            text = f""
+            values = [col['name'], col['type']]
+            self.treeview.insert("", "end", values=list(values))
+
 
     def show_data(self):
         state = self.controller.state_map
         data = state['query_result']
-        
+        structure =state['table_structure']
 
-        if not data:
-            return
-        
+        # textboxへの処理はコメントアウト        
         # 見出し
-        header = ctk.CTkLabel(self.table_list, text=f"---  {state['selected_table']}  ---", anchor="w")
-        header.pack(fill="x")
+        # header = ctk.CTkLabel(self.table_list, text=f"---  {state['selected_table']}  ---", anchor="w")
+        # header.pack(fill="x")
 
-        # # column取得
-        colomns = data[0].keys()
-        # print("カラム:",colomns)
+        # # # column取得
+        # colomns = data[0].keys()
+        # # print("カラム:",colomns)
 
-        # # ヘッダ
-        header = ctk.CTkLabel(self.table_list, text="|".join(colomns),anchor="w")
-        header.pack(fill="x")
+        # # # ヘッダ
+        # header = ctk.CTkLabel(self.table_list, text="|".join(colomns),anchor="w")
+        # header.pack(fill="x")
 
-        # スクロールラベルバーにボタンを追加
+        # # スクロールラベルバーにボタンを追加
+        # for row in data:
+        #     values = [str(row[col]) for col in colomns]
+        #     label = ctk.CTkLabel(self.table_list, text="|".join(values), anchor="w")
+        #     label.pack(fill="x")                   
+        
+        # 既存データをすべて削除
+        for item in self.treeview2.get_children():
+            self.treeview2.delete(item)
+
+        # カラム行だけでも作成して欲しいので、dataがなくても終了させない
+        # if not data:
+        #     return
+
+        # カラムの設定
+        # INSERTされたデータがないい場合でもカラムを作成したいため、テーブル構造からカラムを作成する              
+        # columns = data[0].keys()
+        columns = []
+        for col in structure:
+            columns.append(col['name'])
+            
+        self.treeview2['columns'] = list(columns)
+        # ID列を表示しない設定
+        self.treeview2['show'] = 'headings'  
+
+        # 列の見出し(ヘッダー)を設定
+        for col in columns:
+            self.treeview2.heading(col, text=col)
+            self.treeview2.column(col, width=100, anchor='w')   #anchor='w'で左寄せ
+            
+        #データの挿入 (parent="", index="end")
         for row in data:
-            values = [str(row[col]) for col in colomns]
-            label = ctk.CTkLabel(self.table_list, text="|".join(values), anchor="w")
-            label.pack(fill="x")                   
+            # 辞書型(values)をリスト変換して渡す
+            values = [str(row[col]) for col in columns]
+            self.treeview2.insert("", "end", values=list(values))
+
 # -------------------------
 # 起動処理
 # -------------------------
