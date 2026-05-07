@@ -17,7 +17,7 @@ class FileMergeApp(ctk.CTk):
         super().__init__()
 
         self.configure(fg_color="#191919")
-        self.title("Text Extract App")
+        self.title("File Merge App")
         self.geometry("1500x800")
 
         # -------------------------
