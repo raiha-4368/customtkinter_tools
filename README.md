@@ -13,11 +13,18 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
 - counter  
  数をカウントするシンプルなツール  
 
+ - csv_formatter  
+ csvファイルを開き、任意で整形(空白、改行タブの削除を)する    
+
  - csv_viewer  
  csvファイルを開き、その内容を表示する(編集不可)    
 
- - csv_viewer  
- csvファイルを開き、任意で整形(空白、改行タブの削除を)する    
+ - db_viewer  
+ 3画面の試作品ツール  
+ dbファイルを開き、その内容を表示する(編集不可)    
+
+ - diff_files  
+ファイル差分表示ツール  
 
 - extension_sort  
  ディレクトリを選択し、その直下にあるファイルの拡張子ごとにフォルダに振り分けるツール   
@@ -32,6 +39,9 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
  - pomodoro_timer  
  ポモドーロのサイクル(25分作業5分休憩を4回繰り返す)を計ることができるツール    
 
+ - release_porter  
+ 自信のソースを他者に展開する時、フォルダ・ファイルをまとめるようとして作成したツール    
+
  - rename_files  
  ディレクトリを選択し、その直下にあるファイル名を一括で変更することができるツール    
 
@@ -44,6 +54,8 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
 - text_extract  
  選択したファイル内から任意の文字列を含む行を検索し、抽出するツール  
 
+- treeviewer  
+windowsにはないtreeコマンドを疑似的に行うツール
 
 ## Custom tkinterのインストール
 以下コマンドを実行  
@@ -58,16 +70,20 @@ custom_tkinter_tools/
 └apps							※ツール  
 │├contdown  
 │├counter  
-│├csv_viewer  
 │├csv_formatter  
+│├csv_viewer  
+│├db_viewer  
+│├diff_files  
 │├extension_sort  
 │├memo  
 │├merge_files  
 │├pomodoro_timer  
+│├release_porter  
 │├rename_files  
 │├serial_number_files  
 │├stopwatch  
 │├text_extract  
+│├treeviewer  
 ├ .gitignore  
 ├ 環境構築  
 │		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納  
