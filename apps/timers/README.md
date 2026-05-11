@@ -39,7 +39,7 @@ python -m apps.timer.main
 <summary>フォルダ構成(折り畳み)  </summary>
 
 apps  
-├timers 
+├timers  
 │		├─build(build及びdistはexeファイル作成時に自動生成)  
 │   ├── dist  
 │   │   └── main.exe  
@@ -69,12 +69,12 @@ main.py
  │  
 	∟***** class Countdown(Countdownタイマー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
-	∟add_countdown_minutes(ボタン押下時、タイマーに1分追加)	 
-	∟add_countdown_ten_seccond(ボタン押下時、タイマーに10秒追加)	
-	∟add_countdown_one_seccond(ボタン押下時、タイマーに1秒追加)	 
-	∟countdown_time_view(上記追加したタイマーの時間を整形(00:00.000の形式))	 
-	∟update_time(タイムの更新処理。afterによりstartを押した間10ミリ秒毎に更新を行う)  
-	∟start(開始時間を取得し、update_timeを実行)  
+	∟add_countdown_minutes(ボタン押下時、タイマーに1分追加)   
+	∟add_countdown_ten_seccond(ボタン押下時、タイマーに10秒追加)   
+	∟add_countdown_one_seccond(ボタン押下時、タイマーに1秒追加)	  
+	∟countdown_time_view(上記追加したタイマーの時間を整形(00:00.000の形式))	  
+	∟update_time(タイムの更新処理。afterによりstartを押した間10ミリ秒毎に更新を行う)   
+	∟start(開始時間を取得し、update_timeを実行)   
 	∟stop(今までの経過時間を取得し、after_cancelでupdate_timeの処理を止める)  
 	∟reset(タイマーの設定時刻及び、開始時間/経過時間を初期化)  
 	∟toggle_buttons(1分/10秒/1秒ボタン及び、start/stopボタン押下時にボタンの有効化/無効化を切り替える)  
@@ -96,7 +96,7 @@ main.py
 	∟tick(作業中/休憩判定及び切り替え処理)  
 	∟toggle_buttons(スタート/リセットボタンの有効化/無効化処理)  
   ∟change_mode(セグメントボタンにより、モードチェンジを行う)  
- │ 	 
+ │ 	  
 	∟***** class TimersApp(起動用) *****  
 	∟__init__(各画面の生成を行う)  
 	∟select_frame(指定された名前のframeを表示し、他を隠す)  
