@@ -36,7 +36,7 @@ python -m apps.regex.main
 <summary>フォルダ構成(折り畳み)  </summary>
 
 apps  
-├regex 
+├regex   
 │		├─build(build及びdistはexeファイル作成時に自動生成)  
 │   ├── dist  
 │   │   └── main.exe  

@@ -36,7 +36,7 @@ python -m apps.jsoniewer.main
 <summary>フォルダ構成(折り畳み)  </summary>
 
 apps  
-├jsonviewer 
+├jsonviewer   
 │		├─build(build及びdistはexeファイル作成時に自動生成)  
 │   ├── dist  
 │   │   └── main.exe  

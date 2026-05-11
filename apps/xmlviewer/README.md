@@ -36,7 +36,7 @@ python -m apps.xmlviewer.main
 <summary>フォルダ構成(折り畳み)  </summary>
 
 apps  
-├xmliewer 
+├xmliewer   
 │		├─build(build及びdistはexeファイル作成時に自動生成)  
 │   ├── dist  
 │   │   └── main.exe  
