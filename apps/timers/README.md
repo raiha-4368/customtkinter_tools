@@ -63,11 +63,11 @@ common
 <summary>簡易設計(折り畳み)  </summary>
 
 main.py  
-	∟***** class NavigationFrame(サイドメニュー用) *****
+	∟***** class NavigationFrame(サイドメニュー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
 	∟ change_mode(サイドメニュー下部にあるモードチェンジ処理)  
- │ 	
-	∟***** class Countdown(Countdownタイマー用) *****
+ │  
+	∟***** class Countdown(Countdownタイマー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
 	∟add_countdown_minutes(ボタン押下時、タイマーに1分追加)	
 	∟add_countdown_ten_seccond(ボタン押下時、タイマーに10秒追加)	
@@ -78,17 +78,17 @@ main.py
 	∟stop(今までの経過時間を取得し、after_cancelでupdate_timeの処理を止める)  
 	∟reset(タイマーの設定時刻及び、開始時間/経過時間を初期化)  
 	∟toggle_buttons(1分/10秒/1秒ボタン及び、start/stopボタン押下時にボタンの有効化/無効化を切り替える)  
- │ 	
-	∟***** class Stopwatch(Stopwatch用) *****
+ │  
+	∟***** class Stopwatch(Stopwatch用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
- 	∟create_widgets(初期画面)	
+ 	∟create_widgets(初期画面)	 
 	∟update_time(タイムの更新処理。afterによりstartを押した間10ミリ秒毎に更新を行う)  
 	∟start(開始時間を取得し、update_timeを実行)  
 	∟stop(今までの経過時間を取得し、after_cancelでupdate_timeの処理を止める)  
 	∟reset(開始時間及び、経過時間を初期化)  
 	∟toggle_buttons(start及びstopボタン押下時にボタンの有効化/無効化を切り替える)  
- │ 	
-	∟***** class Pomodoro(Pomodoroタイマー用) *****
+ │  
+	∟***** class Pomodoro(Pomodoroタイマー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
  	∟start(スタート)  
 	∟reset(リセット)  
@@ -97,7 +97,7 @@ main.py
 	∟toggle_buttons(スタート/リセットボタンの有効化/無効化処理)  
   ∟change_mode(セグメントボタンにより、モードチェンジを行う)  
  │ 	
-	∟***** class TimersApp(起動用) *****
+	∟***** class TimersApp(起動用) *****  
 	∟__init__(各画面の生成を行う)  
 	∟select_frame(指定された名前のframeを表示し、他を隠す)  
 
