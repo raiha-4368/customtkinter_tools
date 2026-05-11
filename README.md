@@ -29,6 +29,9 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
 - extension_sort  
  ディレクトリを選択し、その直下にあるファイルの拡張子ごとにフォルダに振り分けるツール   
 
+- jsonviewer  
+jsonファイルをツリービューに表示し、見やすくするツール  
+
  - memo  
  テキストエリアに記述した内容を保存する/テキストファイルを開きその内容を表示、  
  変更内容を上書き保存できるツール    
@@ -38,6 +41,9 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
     
  - pomodoro_timer  
  ポモドーロのサイクル(25分作業5分休憩を4回繰り返す)を計ることができるツール    
+
+ - regex  
+記述した文字に対して、正規表現を行うツール  
 
  - release_porter  
  自信のソースを他者に展開する時、フォルダ・ファイルをまとめるようとして作成したツール    
@@ -54,8 +60,14 @@ Tkinterのみで作成したツールは別リポジトリでの管理として�
 - text_extract  
  選択したファイル内から任意の文字列を含む行を検索し、抽出するツール  
 
+- timers  
+Countdownツール、Stopwatchツール、PomodororTimerツールを複合したツール  
+
 - treeviewer  
 windowsにはないtreeコマンドを疑似的に行うツール
+
+- xmlviewer  
+xmlファイルをツリービューに表示し、見やすくするツール  
 
 ## Custom tkinterのインストール
 以下コマンドを実行  
@@ -75,15 +87,19 @@ custom_tkinter_tools/
 │├db_viewer  
 │├diff_files  
 │├extension_sort  
+│├jsonviewer  
 │├memo  
 │├merge_files  
 │├pomodoro_timer  
+│├regex  
 │├release_porter  
 │├rename_files  
 │├serial_number_files  
 │├stopwatch  
 │├text_extract  
+│├timers  
 │├treeviewer  
+│├xmlviewer  
 ├ .gitignore  
 ├ 環境構築  
 │		∟環境構築時のコマンドラインのテキスト、スクリーンショットを格納  
