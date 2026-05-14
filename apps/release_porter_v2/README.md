@@ -35,11 +35,9 @@ path = apps
 
 - 以下のリストでコピー元を設定。> がある場合右辺に記述することでコピー元からフォルダ構成を変更する。
 release_list = 
-    # [元パス] > [コピー先パス（アプリフォルダからの相対）]
     apps/{target_src}/main.py
     apps/{target_src}/icon_01.ico
     common
-    # exeファイルだけ直下（./）に配置
     apps/{target_src}/dist/main.exe > main.exe
 
 ## フォルダ構成
