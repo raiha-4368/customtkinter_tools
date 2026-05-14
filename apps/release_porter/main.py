@@ -4,6 +4,9 @@ import customtkinter as ctk
 from common import dialogs
 from pathlib import Path
 import shutil
+import os
+
+import configparser
 
 # 依存関係を洗い出すためのモジュール
 # 正常に取れるか不明の為、使用は一旦保留
@@ -29,6 +32,18 @@ class ReleasePorterApp(ctk.CTk):
         super().__init__()   
         self.title("Release Porter")
         self.geometry("1200x800")
+
+
+        # 実行しているpyファイルがあるディレクトリを取得
+        # pyファイルと同階層にあるconfig.iniのpathを取得しに行く
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        config_path = os.path.join(base_dir,'config.ini')
+        print(config_path)
+
+        # configファイルの読み込み
+        self.config = configparser.ConfigParser()
+        self.config.read(config_path, encoding='utf-8')
+        print(self.config['release_target'])
 
         # -------------------------
         # フレーム生成
@@ -154,31 +169,40 @@ class ReleasePorterApp(ctk.CTk):
 
     # 保存処理
     def folder_porter(self):
+        try:
+            # 移動除外リストの作成(未実装)
+            ignore_list = []
+            flag = False
+            if self.path_list:
+        
+                save_path = dialogs.select_folder(title="保存先フォルダを選択してください")
+                if save_path:
+                    for item in self.path_list:
+                        if Path(item).is_dir():
+                            # 保存先パスに元のフォルダ名をくっつける
+                            dest = Path(save_path) / Path(item).name
 
-        # 移動除外リストの作成(未実装)
-        ignore_list = []
-        if self.path_list:
-
-            save_path = dialogs.select_folder(title="保存先フォルダを選択してください")
-            if save_path:
-                for item in self.path_list:
-                    if Path(item).is_dir():
-                        # 保存先パスに元のフォルダ名をくっつける
-                        dest = Path(save_path) / Path(item).name
-
-                        # dirs_exist_ok=Trueで同一ファイルがあってもエラーにしない
-                        shutil.copytree(item,
+                            # dirs_exist_ok=Trueで同一ファイルがあってもエラーにしない
+                            shutil.copytree(item,
                                         dest,
-                                        ignore=shutil.ignore_petterns(ignore_list),
+                                        # ignore=shutil.ignore_petterns(ignore_list), # 除外設定(今は未設定)
                                         dirs_exist_ok=True)
+                            flag = True
+                        else:
+                            # デフォルトで上書きは許容される
+                            shutil.copy(item, save_path)
+                            flag = True
+                    if flag:
+                        messagebox.showinfo("フォルダに保存しました", f"{save_path}\nに保存しました")
                     else:
-                        # デフォルトで上書きは許容される
-                        shutil.copy(item, save_path)
-            
-                messagebox.showinfo("フォルダに保存しました", f"{save_path}\nに保存しました")
-        else:
-            messagebox.showerror("エラー", "フォルダ/ファイルが選択されていません。")
-
+                        # わざと例外にする
+                        raise ValueError("フォルダの保存に失敗しました")
+            else:
+                    messagebox.showerror("エラー", "フォルダ/ファイルが選択されていません。")
+        
+        except Exception as e:
+                messagebox.showerror("エラー", "フォルダの保存に失敗しました")
+                
 
 
     # クリア処理
