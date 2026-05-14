@@ -16,15 +16,14 @@ from modulefinder import ModuleFinder
 # TODO プログレスバーの実装を検討
 
 
-
-
 # 外観モードの設定（"System", "Dark", "Light"）
 # テーマカラーの設定（"blue", "green", "dark-blue"）
 ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
+ctk.set_default_color_theme("green")
 
 
 # exe化時にconfig.iniの位置が問題
+# 現状未使用
 # =====================================
 # 実行ディレクトリを取得
 # =====================================
@@ -182,22 +181,6 @@ class ReleasePorterApp(ctk.CTk):
 
         except Exception as e:
             messagebox.showerror("エラー", f"保存に失敗しました\n{e}")
-                
-
-
-    # クリア処理
-    def clear(self):
-        # 既存データをすべて削除
-        for item in self.release_area.get_children():
-            self.release_area.delete(item)
-
-        # path_listを空にする
-        self.path_list = []
-
-    # モードチェンジ
-    def change_mode(self, new_appearance_mode):
-        print(new_appearance_mode)
-        ctk.set_appearance_mode(new_appearance_mode)
 
 # -------------------------
 # 起動処理
