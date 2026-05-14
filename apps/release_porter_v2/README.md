@@ -69,7 +69,7 @@ common
 
 main.py  
 	∟get_base_path(実行ディレクトリを取得する。現在未使用)  
-	∟********** class ReleasePorterApp **********
+	∟********** class ReleasePorterApp **********   
 		∟__init__(初期化、frame生成)  
 		∟ create_main_frame(フレーム内の要素を生成)  
 		∟show_release_list(config設定箇所のリストを取得し、表示)  
