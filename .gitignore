@@ -5,11 +5,11 @@ __pycache__/
 *.pyc
 
 # logs
-*/apps/logs/
+apps/*/logs/
 *.log
 
 # build(exeファイル以外はgit管理に含めない)
-*/apps/build/
+apps/*/build/
 main.spec
 
 # プロジェクトルートのdistとbuildはgit管理に含めない
@@ -17,10 +17,10 @@ main.spec
 /build/
 
 # 仮フォルダはgit管理に含めない
-*/apps/*/temp/
+apps/*/temp/
 
 # test用のファイルはgit管理に含めない
-*/apps/*/test_dir
+apps/*/test_dir
 
 # 自分用メモはgit管理しない
 /memo.txt

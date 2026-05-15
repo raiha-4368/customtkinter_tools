@@ -48,6 +48,9 @@ jsonファイルをツリービューに表示し、見やすくするツール
  - release_porter  
  自信のソースを他者に展開する時、フォルダ・ファイルをまとめるようとして作成したツール    
 
+ - release_porter_v2  
+release_porterの改良版。UIが大きく変化し、別のツールとなってしまったためv2として切り分けしたツール    
+
  - rename_files  
  ディレクトリを選択し、その直下にあるファイル名を一括で変更することができるツール    
 
@@ -93,6 +96,7 @@ custom_tkinter_tools/
 │├pomodoro_timer  
 │├regex  
 │├release_porter  
+│├release_porter_v2  
 │├rename_files  
 │├serial_number_files  
 │├stopwatch  
