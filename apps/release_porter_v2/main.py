@@ -28,6 +28,7 @@ ctk.set_default_color_theme("green")
 # 実行ディレクトリを取得
 # =====================================
 def get_base_path():
+    # exe化されているかの判定
     if getattr(sys,'frozen', False):
         return os.path.dirname(sys.executable)
     return os.path.dirname(os.path.abspath(__file__))
@@ -48,7 +49,8 @@ class ReleasePorterApp(ctk.CTk):
 
         # 実行しているpyファイルがあるディレクトリを取得
         # pyファイルと同階層にあるconfig.iniのpathを取得しに行く
-        base_dir = os.path.dirname(os.path.abspath(__file__))
+        # base_dir = os.path.dirname(os.path.abspath(__file__))
+        base_dir = get_base_path()
 
         # exe用に直下にする
         # config_path = 'config.ini'
@@ -157,9 +159,12 @@ class ReleasePorterApp(ctk.CTk):
                     src_str, dest_sub_str = item, item
                 src_path = Path(src_str.strip())
 
+
                 if not src_path.exists():
                         print(src_path)
                         continue
+
+                print(f"src_path:{src_path}")
 
                 # 3.コピー先の計算
                 # save_ base (選択先/アプリ名) + 元の相対パス構造を維持してコピー    
@@ -167,6 +172,7 @@ class ReleasePorterApp(ctk.CTk):
                 
                 # 親ディレクトリを作成(ないとエラーになるため)
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
+                print(f"des_path:{dest_path}")
 
                 if src_path.is_dir():
                     # フォルダのコピー

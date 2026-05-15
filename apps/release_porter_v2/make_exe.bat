@@ -5,6 +5,7 @@ cd /d %~dp0\..\..
 echo "directory: %cd%"
 rem pyinstallerコマンドを実行
 pyinstaller apps/release_porter_v2/main.py --onefile  --noconsole --icon=apps/release_porter_v2/icon_01.ico --paths . --distpath apps/release_porter_v2/dist
+
 rem exeファイルが生成された後、再びバッチファイルのあるディレクトリに移動
 cd apps/release_porter_v2
 pause
