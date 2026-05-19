@@ -49,10 +49,13 @@ apps
 │   │   ├── 03_timers(Pomodoro).png  
 │   │   ├── icon_01.clip(変換前iconファイル)  
 │   │   └── icon_01.png(同上)  
+│   ├── countdown.py  
 │   ├── icon_01.ico  
 │   ├── main.py  
 │   ├── make_exe.bat  
-│   └── README.md  
+│   ├── pomodoro.py  
+│   ├── README.md  
+│   └── stopwatch.py  
 common   
 └─共通処理用ディレクトリ  
 
@@ -67,6 +70,11 @@ main.py
 	∟__init__(初期化、画面のウェジット生成)  
 	∟ change_mode(サイドメニュー下部にあるモードチェンジ処理)  
  │  
+	∟***** class TimersApp(起動用) *****  
+	∟__init__(各画面の生成を行う)  
+	∟select_frame(指定された名前のframeを表示し、他を隠す)  
+
+countdown.py  
 	∟***** class Countdown(Countdownタイマー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
 	∟add_countdown_minutes(ボタン押下時、タイマーに1分追加)   
@@ -78,7 +86,8 @@ main.py
 	∟stop(今までの経過時間を取得し、after_cancelでupdate_timeの処理を止める)  
 	∟reset(タイマーの設定時刻及び、開始時間/経過時間を初期化)  
 	∟toggle_buttons(1分/10秒/1秒ボタン及び、start/stopボタン押下時にボタンの有効化/無効化を切り替える)  
- │  
+
+stopwatch.py  
 	∟***** class Stopwatch(Stopwatch用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
  	∟create_widgets(初期画面)	  
@@ -87,7 +96,8 @@ main.py
 	∟stop(今までの経過時間を取得し、after_cancelでupdate_timeの処理を止める)   
 	∟reset(開始時間及び、経過時間を初期化)   
 	∟toggle_buttons(start及びstopボタン押下時にボタンの有効化/無効化を切り替える)   
- │  
+
+pomodoro.py  
 	∟***** class Pomodoro(Pomodoroタイマー用) *****  
 	∟__init__(初期化、画面のウェジット生成)  
  	∟start(スタート)  
@@ -95,11 +105,7 @@ main.py
 	∟update_display(画面更新処理)  
 	∟tick(作業中/休憩判定及び切り替え処理)  
 	∟toggle_buttons(スタート/リセットボタンの有効化/無効化処理)  
-  ∟change_mode(セグメントボタンにより、モードチェンジを行う)  
- │ 	  
-	∟***** class TimersApp(起動用) *****  
-	∟__init__(各画面の生成を行う)  
-	∟select_frame(指定された名前のframeを表示し、他を隠す)  
+  ∟change_mode(セグメントボタンにより、モードチェンジを行う)   
 
 </details>
 
@@ -110,6 +116,8 @@ main.py
 - 左側のメニューでPomodoroを選択 → Pomodoroタイマーが正常に動作する
 
 ## version履歴
+- v1.0.1(2026-05-19)  
+	main.pyからcoundwon、stopwatch、pomodoroを別ファイルに分離  
 - v1.0.0(2026-05-11)  
 	初回リリース  
 
