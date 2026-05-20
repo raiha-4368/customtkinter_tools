@@ -5,7 +5,6 @@ from pathlib import Path
 import json
 
 class JsonViewerApp(ctk.CTkFrame):
-
     # -------------------------
     # init(引数の最初はself固定となる)
     # -------------------------

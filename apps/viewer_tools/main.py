@@ -9,14 +9,12 @@ from apps.viewer_tools.diff import DifffilesApp
 from apps.viewer_tools.treeviewer import TreeCommandApp
 from apps.viewer_tools.db_viewer import DBViewerApp
 
-
 # 外観モードの設定（"System", "Dark", "Light"）
 # テーマカラーの設定（"blue", "green", "dark-blue"）
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("green")
 
 # ======================================================================================================================
-
 class NavigationFrame(ctk.CTkFrame):
     """サイドメニュー用のクラス"""
     def __init__(self, master, select_page_callback, **kwargs):
@@ -115,7 +113,6 @@ class ViewerTools(ctk.CTk):
                 page_instance.grid_forget()
 
 # ======================================================================================================================
-
 # -------------------------
 # 起動処理
 # -------------------------

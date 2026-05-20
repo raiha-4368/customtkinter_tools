@@ -5,7 +5,6 @@ from itertools import zip_longest
 import difflib
 
 class DifffilesApp(ctk.CTkFrame):
-
     # -------------------------
     # init(引数の最初はself固定となる)
     # -------------------------

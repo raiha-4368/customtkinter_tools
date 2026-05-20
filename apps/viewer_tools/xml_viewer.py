@@ -4,13 +4,7 @@ from common import dialogs
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-# 外観モードの設定（"System", "Dark", "Light"）
-# テーマカラーの設定（"blue", "green", "dark-blue"）
-ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
-
 class XmlViewerApp(ctk.CTkFrame):
-
     # -------------------------
     # init(引数の最初はself固定となる)
     # -------------------------

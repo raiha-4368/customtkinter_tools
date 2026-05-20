@@ -38,10 +38,6 @@ def query_exe(sql, db_path,placeholder=None, fetch=False):
             return None
     finally:
         conn.close()
-# 外観モードの設定（"System", "Dark", "Light"）
-# テーマカラーの設定（"blue", "green", "dark-blue"）
-ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("green")
 
 class DBViewerApp(ctk.CTkFrame):
     # -------------------------

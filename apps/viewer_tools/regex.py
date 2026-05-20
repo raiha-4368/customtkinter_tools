@@ -2,7 +2,6 @@ import customtkinter as ctk
 import re
 
 class RegexApp(ctk.CTkFrame):
-
     # -------------------------
     # init(引数の最初はself固定となる)
     # -------------------------

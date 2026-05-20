@@ -4,7 +4,6 @@ import customtkinter as ctk
 from common import dialogs, files
 
 class CsvViewerApp(ctk.CTkFrame):
-
     # -------------------------
     # init(引数の最初はself固定となる)
     # -------------------------
