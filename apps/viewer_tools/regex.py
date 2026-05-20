@@ -26,17 +26,25 @@ class RegexApp(ctk.CTkFrame):
         self.exact_match_flag = False
         self.result = []
 
+        # -------------------------
+        # menu_frame
+        # -------------------------
+        self.menu_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.menu_frame.pack()
+        # -------------------------
+        # menu_frame内の要素
+        # -------------------------
         # 説明ラベル
-        self.label = ctk.CTkLabel(self, text="正規表現を行います",fg_color="#191919",text_color="#ffffff")
+        self.label = ctk.CTkLabel(self.menu_frame, text="正規表現を行います")
         self.label.pack(pady=(20,20))
         # エラー用ラベル
-        self.error_label = ctk.CTkLabel(self, text="",text_color="red")
+        self.error_label = ctk.CTkLabel(self.menu_frame, text="",text_color="red")
         self.error_label.pack(pady=(10,10))
 
         # ***************************************************************************************************
         # search_frame
         # 検索文字列入力フレーム
-        self.search_frame = ctk.CTkFrame(self, fg_color="#191919")
+        self.search_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.search_frame.pack(fill="both", expand=True)
 
         # 正規表現の入力を促すラベル
@@ -52,14 +60,14 @@ class RegexApp(ctk.CTkFrame):
         # ***************************************************************************************************
         # textbox_frame
         # テキストエリア用フレーム
-        self.textbox_frame = ctk.CTkFrame(self, fg_color="#191919")
+        self.textbox_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.textbox_frame.pack(fill="both", expand=True)
 
         # --- 左側：入力エリア用のコンテナ ---
         self.left_container = ctk.CTkFrame(self.textbox_frame, fg_color="transparent")
         self.left_container.pack(side="left", fill="both", expand=True, padx=(20, 0), pady=20)
 
-        self.label_target = ctk.CTkLabel(self.left_container, text="入力データ", text_color="#ffffff")
+        self.label_target = ctk.CTkLabel(self.left_container, text="入力データ")
         self.label_target.pack(side="top", anchor="w") # anchor="w"で左寄せ
 
         self.textbox_target = ctk.CTkTextbox(self.left_container)
@@ -68,7 +76,7 @@ class RegexApp(ctk.CTkFrame):
 
 
         # --- 中央：矢印 ---
-        self.arrow_label = ctk.CTkLabel(self.textbox_frame, text="⇒", fg_color="#191919", text_color="#ffffff")
+        self.arrow_label = ctk.CTkLabel(self.textbox_frame, text="⇒")
         self.arrow_label.pack(side="left", padx=(10, 10))
 
 
@@ -76,7 +84,7 @@ class RegexApp(ctk.CTkFrame):
         self.right_container = ctk.CTkFrame(self.textbox_frame, fg_color="transparent")
         self.right_container.pack(side="left", fill="both", expand=True, padx=(0, 20), pady=20)
 
-        self.label_result = ctk.CTkLabel(self.right_container, text="検索結果", text_color="#ffffff")
+        self.label_result = ctk.CTkLabel(self.right_container, text="検索結果")
         self.label_result.pack(side="top", anchor="w")
 
         self.textbox_result = ctk.CTkTextbox(self.right_container, state='disabled')
@@ -115,19 +123,3 @@ class RegexApp(ctk.CTkFrame):
             new_text = new_text + "正規表現が入力されていません"
         
         self.error_label.configure(text=new_text)
-
-
-    # モードチェンジ
-    def change_mode(self, new_appearance_mode):
-        print(new_appearance_mode)
-        ctk.set_appearance_mode(new_appearance_mode)
-
-# -------------------------
-# 起動処理
-# -------------------------
-if __name__ == "__main__":
-    #インスタンス化
-    app = RegexApp()
-    #イベント待ちループ開始
-    app.mainloop()
-

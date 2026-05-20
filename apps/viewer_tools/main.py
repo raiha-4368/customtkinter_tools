@@ -76,7 +76,7 @@ class ViewerTools(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Timers App")
-        self.geometry("1500x1000")
+        self.geometry("1600x800")
 
         # -------------------------
         # menuの生成

@@ -199,7 +199,7 @@ class SelectPage(ctk.CTkFrame):
     def select_file(self):
         state = self.controller.state_map
         # ファイルを選択
-        filepath = dialogs.select_file()
+        filepath = dialogs.select_file(filetypes=[("db files", "*.db")],title="dbファイルを選択")
 
         if filepath:
             try:
@@ -560,12 +560,3 @@ class ResultPage(ctk.CTkFrame):
             # 辞書型(values)をリスト変換して渡す
             values = [str(row[col]) for col in columns]
             self.treeview2.insert("", "end", values=list(values))
-
-# -------------------------
-# 起動処理
-# -------------------------
-if __name__ == "__main__":
-    # インスタンス化
-    app = DB_ViewerApp()
-    #イベント待ちループ開始
-    app.mainloop()

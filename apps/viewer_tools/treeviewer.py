@@ -19,26 +19,36 @@ class TreeCommandApp(ctk.CTkFrame):
         label.pack()
 
         # -------------------------
-        # side_frame内の要素
+        # menu_frame
         # -------------------------
-        self.dir_select = ctk.CTkButton(self, text="対象ディレクトリを選択",command=self.select_dir)
-        self.dir_select.pack(pady=(10,10), padx=(10,10))
+        self.menu_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.menu_frame.pack()
+        # -------------------------
+        # menu_frame内の要素
+        # -------------------------
+        self.dir_select = ctk.CTkButton(self.menu_frame, text="対象ディレクトリを選択",command=self.select_dir)
+        self.dir_select.pack(side="left", pady=(10,10), padx=(10,10))
 
-        self.clear_button = ctk.CTkButton(self, text="クリア",command=self.clear)
-        self.clear_button.pack(pady=(10,10), padx=(10,10))
+        self.clear_button = ctk.CTkButton(self.menu_frame, text="クリア",command=self.clear)
+        self.clear_button.pack(side="left", pady=(10,10), padx=(10,10))
 
 
+        # -------------------------
+        # content_frame
+        # -------------------------
+        self.content_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.content_frame.pack(expand=True,fill="both")
         # -------------------------
         # content_frame内の要素
         # -------------------------
-        self.content_label = ctk.CTkLabel(self,text="対象のディレクトリ以下をTreeコマンド風に表示します")
+        self.content_label = ctk.CTkLabel(self.content_frame,text="対象のディレクトリ以下をTreeコマンド風に表示します")
         self.content_label.pack(pady=(30,10))
 
-        self.path_label = ctk.CTkLabel(self,text="path : ")
+        self.path_label = ctk.CTkLabel(self.content_frame,text="path : ")
         self.path_label.pack(pady=(10,20))
 
 
-        self.textbox_area = ctk.CTkTextbox(self, state="disabled")
+        self.textbox_area = ctk.CTkTextbox(self.content_frame, state="disabled")
         self.textbox_area.pack(expand=True,fill="both",pady=(0,20),padx=(20,20))
 
 

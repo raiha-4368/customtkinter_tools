@@ -22,25 +22,35 @@ class JsonViewerApp(ctk.CTkFrame):
         label.pack()
 
         # -------------------------
-        # side_frame内の要素
+        # menu_frame
         # -------------------------
-        self.dir_select = ctk.CTkButton(self, text="ファイルを選択",command=self.select_json)
-        self.dir_select.pack(pady=(10,10), padx=(10,10))
+        self.menu_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.menu_frame.pack()
+        # -------------------------
+        # menu_frame内の要素
+        # ------------------------- 
+        self.dir_select = ctk.CTkButton(self.menu_frame, text="ファイルを選択",command=self.select_json)
+        self.dir_select.pack(side="left", pady=(10,10), padx=(10,10))
 
-        self.clear_button = ctk.CTkButton(self, text="クリア",command=self.clear)
-        self.clear_button.pack(pady=(10,10), padx=(10,10))
+        self.clear_button = ctk.CTkButton(self.menu_frame, text="クリア",command=self.clear)
+        self.clear_button.pack(side="left", pady=(10,10), padx=(10,10))
 
+
+        # -------------------------
+        # content_frame
+        # -------------------------
+        self.content_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.content_frame.pack(expand=True,fill="both")
         # -------------------------
         # content_frame内の要素
         # -------------------------
-        self.content_label = ctk.CTkLabel(self,text="jsonファイルの中身を表示します")
+        self.content_label = ctk.CTkLabel(self.content_frame, text="jsonファイルの中身を表示します")
         self.content_label.pack(pady=(30,10))
 
-        self.path_label = ctk.CTkLabel(self,text="path : ")
+        self.path_label = ctk.CTkLabel(self.content_frame, text="path : ")
         self.path_label.pack(pady=(10,20))
 
-
-        self.treeview = ttk.Treeview(self)
+        self.treeview = ttk.Treeview(self.content_frame)
         self.treeview.pack(expand=True,fill="both",pady=(0,20),padx=(20,20))
         # 見出し設定
         self.treeview.heading("#0", text=f"jsonファイルビュー")
@@ -48,7 +58,7 @@ class JsonViewerApp(ctk.CTkFrame):
     #jsonファイル選択
     def select_json(self):
         try:
-            filepath = dialogs.select_file(title="jsonファイルを選択")
+            filepath = dialogs.select_file(filetypes=[("json files", "*.json")],title="jsonファイルを選択")
 
             if filepath:
             
@@ -105,19 +115,3 @@ class JsonViewerApp(ctk.CTkFrame):
         # 既存データをすべて削除
         for item in self.treeview.get_children():
             self.treeview.delete(item)
-
-
-    # モードチェンジ
-    def change_mode(self, new_appearance_mode):
-        print(new_appearance_mode)
-        ctk.set_appearance_mode(new_appearance_mode)
-
-# -------------------------
-# 起動処理
-# -------------------------
-if __name__ == "__main__":
-    #インスタンス化
-    app = JsonViewerApp()
-    #イベント待ちループ開始
-    app.mainloop()
-

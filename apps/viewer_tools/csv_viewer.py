@@ -3,6 +3,7 @@ import os
 import tkinter as tk
 from tkinter import filedialog,ttk
 import customtkinter as ctk
+from common import dialogs, files
 
 # 外観モードの設定（"System", "Dark", "Light"）
 # テーマカラーの設定（"blue", "green", "dark-blue"）
@@ -21,19 +22,35 @@ class CsvViewerApp(ctk.CTkFrame):
         label.pack()
 
         # -------------------------
-        # mainフレーム内の要素
+        # menu_frame
         # -------------------------
-        self.filename_button = ctk.CTkButton(self, text="ファイルを選択", command=self.import_file)
-        self.filename_button.pack(pady=(20,10))
-        self.filename_labl = ctk.CTkLabel(self, text="ファイル名")
-        self.filename_labl.pack(pady=(10,20))
+        self.menu_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.menu_frame.pack()
+        # -------------------------
+        # menu_frame内の要素
+        # -------------------------
+        self.filename_button = ctk.CTkButton(self.menu_frame, text="ファイルを選択", command=self.import_file)
+        self.filename_button.pack(side="left", pady=(10,0), padx=(10,10))
+        
+        self.clear_button = ctk.CTkButton(self.menu_frame, text="クリア", command=self.clear)
+        self.clear_button.pack(side="left", pady=(10,0), padx=(10,10))
 
+        # -------------------------
+        # content_frame
+        # -------------------------
+        self.content_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.content_frame.pack(expand=True,fill="both")
+        # -------------------------
+        # content_frame内の要素
+        # -------------------------
+        self.filename_label = ctk.CTkLabel(self.content_frame, text="path : ")
+        self.filename_label.pack(pady=(10,20))
         # Treeview
-        self.treeview = ttk.Treeview(self, show="headings")
+        self.treeview = ttk.Treeview(self.content_frame, show="headings")
         self.treeview.pack(expand=True,fill="both", padx=(20,20))
 
         # errorEntry(通常は何も表示しない、コピペ出来るようにしたいのでテキストボックスで編集不可にする)
-        self.error_entry = ctk.CTkEntry(self, width=500,
+        self.error_entry = ctk.CTkEntry(self.content_frame, width=500,
                                         state='readonly',
                                         justify="center",
                                         fg_color="transparent",
@@ -42,16 +59,13 @@ class CsvViewerApp(ctk.CTkFrame):
                                         text_color="red")
         self.error_entry.pack(pady=(20,20))
         # スクロールバー設定
-        scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.treeview.yview)
+        scrollbar = ttk.Scrollbar(self.content_frame, orient="vertical", command=self.treeview.yview)
         self.treeview.configure(yscrollcommand=scrollbar.set)
 
     def import_file(self):
 
-      filepath = filedialog.askopenfilename(
-          defaultextension=".csv",
-          filetypes=[("csv files", "*.csv"), ("All files", "*.*")],
-          title="ファイルを開く"
-      )
+      filepath = dialogs.select_file(filetypes=[("csv files", "*.csv"), ("All files", "*.*")],title="csvファイルを選択")
+
       if filepath:
         # 再びファイルを読み込んだらerrorラベルの初期化
         self.error_entry.configure(state="normal")
@@ -59,10 +73,10 @@ class CsvViewerApp(ctk.CTkFrame):
         self.error_entry.configure(state="readonly")
 
         # 画面上にファイルパスを表示
-        self.filename_labl.configure(text=filepath)
+        self.filename_label.configure(text=filepath)
         
         try:
-            record = load_csv(filepath)
+            record = files.read_csv_file(filepath)
             # 読み込めていない時は処理終了
             if not record:
                 return
@@ -122,28 +136,9 @@ class CsvViewerApp(ctk.CTkFrame):
            self.error_entry.insert(0,f"ERROR:{e}")
            self.error_entry.configure(state="readonly")
 
-#csvファイル読み込み関数
-def load_csv(filepath):
-    """
-    ファイルパスを受け取り、csvファイルを読み込み、その配列を返す。
-    """
-    records = []
-    if not os.path.exists(filepath):
-        return records
-
-    with open(filepath,newline="", encoding="utf-8") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            records.append(row)
-    return records
-
-
-# -------------------------
-# 起動処理
-# -------------------------
-if __name__ == "__main__":
-    #インスタンス化
-    app = Csv_viewerApp()
-    #イベント待ちループ開始
-    app.mainloop()
-
+    # クリア処理
+    def clear(self):
+        self.filename_label.configure(text=f"path : ")
+        # 既存データをすべて削除
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
