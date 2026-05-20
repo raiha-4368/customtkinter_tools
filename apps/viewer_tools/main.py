@@ -29,26 +29,24 @@ class NavigationFrame(ctk.CTkFrame):
         self.label.grid(row=0, column=0, padx=20, pady=20)
 
         # 切り替えボタン
-        self.btn_page1 = ctk.CTkButton(self, text="TreeViewer", command=lambda: select_page_callback("TreeViewer"))
-        
+        self.btn_page1 = ctk.CTkButton(self, text="Diff", command=lambda: select_page_callback("Diff"))
         self.btn_page1.grid(row=1, column=0, padx=20, pady=20)
 
         self.btn_page2 = ctk.CTkButton(self, text="Regex", command=lambda: select_page_callback("Regex"))
         self.btn_page2.grid(row=2, column=0, padx=20, pady=20)
 
-        self.btn_page3 = ctk.CTkButton(self, text="Xml", command=lambda: select_page_callback("XmlViewer"))
+        self.btn_page3 = ctk.CTkButton(self, text="TreeViewer", command=lambda: select_page_callback("TreeViewer"))        
         self.btn_page3.grid(row=3, column=0, padx=20, pady=20)
-        
+
         self.btn_page4 = ctk.CTkButton(self, text="Csv", command=lambda: select_page_callback("CsvViewer"))
         self.btn_page4.grid(row=4, column=0, padx=20, pady=20)
 
         self.btn_page5 = ctk.CTkButton(self, text="Json", command=lambda: select_page_callback("JsonViewer"))
         self.btn_page5.grid(row=5, column=0, padx=20, pady=20)
 
-
-        self.btn_page6 = ctk.CTkButton(self, text="Diff", command=lambda: select_page_callback("Diff"))
+        self.btn_page6 = ctk.CTkButton(self, text="Xml", command=lambda: select_page_callback("XmlViewer"))
         self.btn_page6.grid(row=6, column=0, padx=20, pady=20)
-
+        
         self.btn_page7 = ctk.CTkButton(self, text="DB", command=lambda: select_page_callback("DBViewer"))
         self.btn_page7.grid(row=7, column=0, padx=20, pady=20)
 
@@ -58,11 +56,7 @@ class NavigationFrame(ctk.CTkFrame):
                                                      selected_color=("orange", "purple"),
                                                      selected_hover_color=("darkorange","indigo"))
         segemented_button.set(ctk.get_appearance_mode())    # 初期値を現在のモードに設定
-        segemented_button.grid(row=10, pady=(0,10))
-
-    # TODO : 取り合えず実装見送り
-    # def toggle_buttons(self, state):
-    #     #ボタンの切り替え
+        segemented_button.grid(row=12, pady=(0,10))
 
     # モードチェンジ
     def change_mode(self, new_appearance_mode):
@@ -100,12 +94,12 @@ class ViewerTools(ctk.CTk):
 
         # 画面インスタンスの生成
         self.pages ={
-            "TreeViewer" : TreeCommandApp(self, fg_color="transparent"),
+            "Diff" : DifffilesApp(self, fg_color="transparent"),
             "Regex" : RegexApp(self, fg_color="transparent"),
-            "XmlViewer" : XmlViewerApp(self, fg_color="transparent"),
+            "TreeViewer" : TreeCommandApp(self, fg_color="transparent"),
             "CsvViewer" : CsvViewerApp(self, fg_color="transparent"),
             "JsonViewer" : JsonViewerApp(self, fg_color="transparent"),
-            "Diff" : DifffilesApp(self, fg_color="transparent"),
+            "XmlViewer" : XmlViewerApp(self, fg_color="transparent"),
             "DBViewer" : DBViewerApp(self, fg_color="transparent"),
             }
 

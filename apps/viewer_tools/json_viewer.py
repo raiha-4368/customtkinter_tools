@@ -1,14 +1,8 @@
-import tkinter as tk
 from tkinter import ttk, messagebox
 import customtkinter as ctk
 from common import dialogs
 from pathlib import Path
 import json
-
-# 外観モードの設定（"System", "Dark", "Light"）
-# テーマカラーの設定（"blue", "green", "dark-blue"）
-ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
 
 class JsonViewerApp(ctk.CTkFrame):
 
@@ -107,7 +101,6 @@ class JsonViewerApp(ctk.CTkFrame):
         # それ以外の場合
         else:
             self.treeview.insert(parent, "end", text=f"value: {data}")            
-
 
 # クリア処理
     def clear(self):

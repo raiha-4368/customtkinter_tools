@@ -1,14 +1,5 @@
-import tkinter as tk
-from tkinter import messagebox
 import customtkinter as ctk
-from common import dialogs
-from pathlib import Path
 import re
-
-# 外観モードの設定（"System", "Dark", "Light"）
-# テーマカラーの設定（"blue", "green", "dark-blue"）
-ctk.set_appearance_mode("Dark")
-ctk.set_default_color_theme("blue")
 
 class RegexApp(ctk.CTkFrame):
 

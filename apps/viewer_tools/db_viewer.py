@@ -1,12 +1,7 @@
-import sys
-import os
-import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 import customtkinter as ctk
 from common import dialogs
-import logging
-from logging.handlers import RotatingFileHandler
 import sqlite3
 
 SELECT_QUERY ="""SELECT * {tablename}"""
@@ -21,65 +16,9 @@ TABLE_LIST = """SELECT name
 TABLE_PRAGMA = "PRAGMA table_info({table_name});"
 
 # =====================================
-# 実行ディレクトリを取得
-# =====================================
-def get_base_path():
-    if getattr(sys,'frozen', False):
-        return os.path.dirname(sys.executable)
-    return os.path.dirname(os.path.abspath(__file__))
-
-# =====================================
-# logs及びDBディレクトリを作成
-# =====================================
-def mkdir_logs_db():
-    base_path = get_base_path()
-    
-    log_dir = os.path.join(base_path, "logs")
-    db_dir = os.path.join(base_path, "db")
-
-    # フォルダが既に存在していてもエラーにはならない
-    os.makedirs(log_dir, exist_ok=True)
-    os.makedirs(db_dir, exist_ok=True)
-
-    log_path= os.path.join(log_dir, "app.log")
-    db_path= os.path.join(db_dir, "torelog.db")
-    
-    return log_path, db_path
-
-
-#======================================
-# logging 設定
-#======================================
-#ディレクトリがなければ作成
-mkdir_logs_db()
-# Logger 作成
-logger = logging.getLogger("resale_app")
-logger.setLevel(logging.INFO)
-
-# handler 作成
-log_handler = RotatingFileHandler(
-        "apps/db_viewer/logs/app.log",
-        maxBytes = 1024 * 1024, # 1MBでローテーション
-        backupCount = 3,        # 古いログを3世代保持
-        encoding = "utf-8"
-    )
-
-# formatter
-log_formatter = logging.Formatter(
-        "%(asctime)s [%(levelname)s] %(message)s"
-    )
-log_handler.setFormatter(log_formatter)
-
-# handler 登録(重複防止)
-if not logger.handlers:
-    logger.addHandler(log_handler)
-
-
-# =====================================
 # DBへの接続、SQLの実行を行う
 # =====================================
 def query_exe(sql, db_path,placeholder=None, fetch=False):
-    logger.info("query_exe: falepath=%s", db_path)
     conn = sqlite3.connect(db_path)
     try:
         #辞書型設定

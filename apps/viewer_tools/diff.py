@@ -315,28 +315,20 @@ class DifffilesApp(ctk.CTkFrame):
         line1 = self.textbox1.get("1.0", "end-1c").splitlines()
         line2 = self.textbox2.get("1.0", "end-1c").splitlines()
 
-        # difflibで差分を生成
-        diff = list(difflib.ndiff(line1, line2))
-
-        print("**************************************")
-        print(f"長さチェック:{len(diff)}")
-
-        for line in diff:
-            # 先頭2文字のコード（"  ", "- ", "+ ", "? "）
-            # ndiff が返す各行の先頭の記号は、以下のように「テキストA（左 / 修正前）」と「テキストB（右 / 修正後）」のどちらに対応しているかが決まっています。
-            # 先頭の記号意味どちらのテキストにあるか
-            #    (半角スペース2つ)両方で共通している行 両方にある
-            # -  (マイナス＋スペース)テキストAにだけ存在する行 テキストA（左）側にある（＝Bで削除された）
-            # +  (プラス＋スペース)テキストBにだけ存在する行テキストB（右）側にある（＝Bで追加された）
-            # ?  (ハテナ＋スペース)直前の行の「文字単位」の変更箇所を示すガイド行どちらにも属さない（画面には表示しない裏の判定用）
-            code = line[:2]
-            # 本文
-            content = line[2:] + "\n" 
-
-            print(f"row:{line}, code:{code}, content:{content}")
-            print("**************************************")
-
-            if self.segment_str == "diff_detail":
+        if self.segment_str == "diff_detail":
+            # difflibで差分を生成
+            diff = list(difflib.ndiff(line1, line2))
+            for line in diff:
+                # 先頭2文字のコード（"  ", "- ", "+ ", "? "）
+                # ndiff が返す各行の先頭の記号は、以下のように「テキストA（左 / 修正前）」と「テキストB（右 / 修正後）」のどちらに対応しているかが決まっています。
+                # 先頭の記号意味どちらのテキストにあるか
+                #    (半角スペース2つ)両方で共通している行 両方にある
+                # -  (マイナス＋スペース)テキストAにだけ存在する行 テキストA（左）側にある（＝Bで削除された）
+                # +  (プラス＋スペース)テキストBにだけ存在する行テキストB（右）側にある（＝Bで追加された）
+                # ?  (ハテナ＋スペース)直前の行の「文字単位」の変更箇所を示すガイド行どちらにも属さない（画面には表示しない裏の判定用）
+                code = line[:2]
+                # 本文
+                content = line[2:] + "\n" 
                 # 変更なし(スペース2つ)
                 if code == "  ":
                     self.diff_textbox.insert("end", content)
@@ -351,18 +343,21 @@ class DifffilesApp(ctk.CTkFrame):
                 elif code == "? ":
                     # 行内の細かい変化 (今回はスキップ、さらに細かく色分けする際に使用)
                     pass
-            elif self.segment_str == "left":
-                if code == "  ":
-                    self.diff_textbox.insert("end", content)
-                elif code == "- ":
-                    self.diff_textbox.insert("end", content, "red_row")
+        elif self.segment_str == "left" or self.segment_str == "right":
+        # zip_longestは、長い方のリストに合わせてループを固定する
+        # 足りない部分はfillvalueで指定した値を入れる
+            for row1, row2 in zip_longest(line1, line2, fillvalue=""):
+                if self.segment_str == "left":
+                    if row1 == row2:
+                        self.diff_textbox.insert("end", f"{row1}\n")
+                    else:
+                        self.diff_textbox.insert("end", f"{row1}\n", "red_row")
 
-            elif self.segment_str == "light":
-                if code == "  ":
-                    self.diff_textbox.insert("end", content)
-                elif code == "+ ":
-                    self.diff_textbox.insert("end", content, "red_row")
-                    
+                elif self.segment_str == "right":
+                    if row1 == row2:
+                        self.diff_textbox.insert("end", f"{row2}\n")
+                    else:
+                        self.diff_textbox.insert("end", f"{row2}\n", "red_row")
 
     def change_content_text(self,value):
         if value == "左ボックス表示":
@@ -370,12 +365,8 @@ class DifffilesApp(ctk.CTkFrame):
             self.check_text_diff()
 
         elif value == "右ボックス表示":
-            self.segment_str = "light"
+            self.segment_str = "right"
             self.check_text_diff()
-        
-        # elif value == "差分のみ表示":
-        #     self.segment_str = "diff_only"
-        #     self.check_text_diff()
         
         elif value == "差分詳細表示":
             self.segment_str = "diff_detail"
