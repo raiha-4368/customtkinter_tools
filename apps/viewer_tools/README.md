@@ -1,6 +1,3 @@
-# ※途中!!!!
-
-
 # viewerツールの集合ツール
 ## CustomTkinterを使用したビューア系ツールの集合
 各種ファイルビューアのツール
@@ -21,13 +18,13 @@
 ## できること
 -  以下Toolsを内包
 ### Tools
-- Diff  
-- Regex
-- Tree Viewer
-- Csv Viewer
-- Json Viewer
-- Xml Viewer
-- DB Viewer
+- Diff(差分表示)  
+- Regex(正規表現)
+- Tree Viewer(疑似treeコマンド)
+- Csv Viewer(csvファイルビューア)
+- Json Viewer(jsonファイルビューア)
+- Xml Viewer(xmlファイルビューア)
+- DB Viewer(dbファイルビューア)
 
 
 ## 使用技術
@@ -47,8 +44,8 @@ python -m apps.viewer_tools.main
 
 ※python -m はPythonモジュールをスクリプト(実行用ファイル)として実行するためのコマンドラインオプション  
 
-1. 対象ファイルを選択ボタンを押下  
-2. ツリービューxmlファイルの内容が表示される
+1. 左のメニューからツールを選択  
+2. 右の画面にツールが表示される
 
 ## フォルダ構成
 <details>
