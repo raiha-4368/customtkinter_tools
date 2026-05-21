@@ -30,9 +30,10 @@ ctk.set_default_color_theme("green")
 def get_base_path():
     # exe化されているかの判定
     if getattr(sys,'frozen', False):
+        # exeファイルが置いてあるパスを返す
         return os.path.dirname(sys.executable)
+    # pyファイルが置いてあるパスを返す
     return os.path.dirname(os.path.abspath(__file__))
-
 
 
 class ReleasePorterApp(ctk.CTk):
