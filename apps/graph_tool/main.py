@@ -6,6 +6,8 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import japanize_matplotlib      # グラフ内の日本語文字表示用ライブラリ。インポートしないと日本語が文字化けする
 
+import numpy as np
+
 import matplotlib.pyplot as plt
 
 
@@ -62,12 +64,36 @@ class GraphApp(ctk.CTk):
         # -------------------------
         # 変数宣言
         # -------------------------
+        self.records = []
+        self.data_list = []
+        self.key_list = []
+        self.graph_type = ""
 
         # -------------------------
         # side_frame内の要素
         # -------------------------
+        label0 = ctk.CTkLabel(self.side_frame, text="グラフ選択")
+        label0.grid(row=1, pady=(10,10), padx=(10,10))
+
+        self.graph_conbobox = ctk.CTkComboBox(self.side_frame, values=["折れ線グラフ", "散布図","円グラフ","ヒストグラム"], command=self.graph_chenge, state="readonly")
+        self.graph_conbobox.grid(row=2, pady=(10,10), padx=(10,10))
+
+        label = ctk.CTkLabel(self.side_frame, text="x(横)軸選択")
+        label.grid(row=3, pady=(10,10), padx=(10,10))
+
+        # x(横)軸
+        self.x_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["default(カラム行)"], command=None, state="readonly")
+        self.x_axis_conbobox.grid(row=4, pady=(10,10), padx=(10,10))
+
+        label2 = ctk.CTkLabel(self.side_frame, text="y(縦)軸選択")
+        label2.grid(row=5, pady=(10,10), padx=(10,10))
+
+        # y(縦)軸
+        self.y_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["default(all)"], command=None, state="readonly")
+        self.y_axis_conbobox.grid(row=6, pady=(10,10), padx=(10,10))
+
         self.dir_select = ctk.CTkButton(self.side_frame, text="ファイルを選択",command=self.import_file)
-        self.dir_select.grid(row=1, pady=(10,10))
+        self.dir_select.grid(row=7, pady=(10,10), padx=(10,10))
 
         # サイドメニューの下部にモードチェンジ用セグメントボタンを配置
         segemented_button = ctk.CTkSegmentedButton(self.side_frame, values=["System", "Dark", "Light"],
@@ -103,42 +129,92 @@ class GraphApp(ctk.CTk):
         scrollbar = ttk.Scrollbar(self.main_frame, orient="vertical", command=self.treeview.yview)
         self.treeview.configure(yscrollcommand=scrollbar.set)
 
+    def axis_choice(self, choice):
+        x_axis = self.x_axis_conbobox.get()
+        y_axis = self.y_axis_conbobox.get()
 
+
+    # コンボボックス選択時
+    def graph_chenge(self, choice):
+        self.display_graph()
+
+    # グラフ描画処理
+    def display_graph(self):
+        print("グラフ描画")
+
+        # 現在のコンボボックスの選択を取得
+        self.graph_type = self.graph_conbobox.get()
+        print(self.graph_type)
+
+        if self.data_list and self.key_list:
+            # グラフ設定
+            # グラフのclear処理
+            self.ax.clear()
+
+            # 円グラフ処理を実行するとグラフのアスペクト比が縦長に変更されてしまう
+            # そのため、ここでそのアスペクト比を初期化する
+            self.ax.set_aspect("auto", adjustable="datalim")
+
+            if self.graph_type == "折れ線グラフ":
+                self.ax.plot(self.key_list, self.data_list, label=f"{self.key_list}")
+
+                self.ax.set_title(f"Display: 折れ線グラフ\npaht :{self.filepath}")
+                # 凡例表示
+                self.ax.legend()
+
+            elif self.graph_type ==  "ヒストグラム":
+                # サンプルデータ
+                # data = np.random.normal(loc=50, scale=10, size=100)
+
+                # ヒストグラム描画
+                self.ax.hist(self.data_list,bins=20, label=f"{self.key_list}")
+                self.ax.set_title(f"Display: ヒストグラム\npaht :{self.filepath}")
+                # 凡例表示
+                self.ax.legend()
+            elif self.graph_type == "散布図":
+                self.ax.scatter(self.key_list, self.data_list, label=f"{self.key_list}")
+                self.ax.set_title(f"Display: 散布図\npaht :{self.filepath}")
+                # 凡例表示
+                self.ax.legend()
+            elif self.graph_type == "円グラフ":
+                # autopct="%1.1f%%で パーセントを自動計算し表示
+                # もし、パーセントだけでなく実際の数値も表示したい場合は自分で計算処理を入れる必要がある
+                self.ax.pie(self.data_list,labels=self.key_list, autopct="%1.1f%%")
+                self.ax.set_title(f"Display: 円グラフ\npaht :{self.filepath}")
+                # 円グラフでは凡例を表示しない
+
+            else:
+                pass
+
+            # キャンバスの更新
+            self.canvas.draw()
+                   
 
     def import_file(self):
 
-        data_list = []
-        key_list = []
+        key_list =["default(カラム行)"]
+        data_list =["default(all)"]
 
-        filepath = dialogs.select_file(
+        self.filepath = dialogs.select_file(
                 title="csvファイルを選択してください", 
                 filetypes=[(("csv Files","*.csv"))])
-        if filepath:
-
+        if self.filepath:
             # commonでの読み込み
-            records = files.read_csv_file(filepath)
+            self.records = files.read_csv_file(self.filepath)
 
-            for row in records:
+            for row in self.records:
                 print(row)
 
                 # 回数も数えてる(一応)
                 for i, key in enumerate(row, start=1):
                     print(row[key])
+                    self.key_list.append(key)
                     key_list.append(key)
-                    data_list.append(int((row[key])))
+                    self.data_list.append(int((row[key])))
+                    data_list.append((row[key]))
             # print(data_list)
 
-            # グラフ設定
-            # 折れ線
-            # グラフのclear処理
-            self.ax.clear()
-
-            self.ax.plot(key_list, data_list, label=f"{key_list}")
-            self.ax.set_title(f"Display: 折れ線グラフ\npaht :{filepath}")
-            self.ax.legend()
-
-            # キャンバスの更新
-            self.canvas.draw()
+            self.display_graph()
             
             #1 既存データをすべて削除
             for item in self.treeview.get_children():
@@ -148,11 +224,11 @@ class GraphApp(ctk.CTk):
             # 以下でlist化する時、カラム行より多い要素があるとき、その列をNoneとして格納してしまう
             # columns = list(record[0].keys())
             # colがNoneの時はcolumnsに含めないよう以下とする
-            columns = [col for col in records[0].keys() if col]
+            columns = [col for col in self.records[0].keys() if col]
             
             #もしkeysにNoneを含んでいるのならflagをTrueとし、警告メッセージを表示する
             worning_flag = False
-            for c in list(records[0].keys()):
+            for c in list(self.records[0].keys()):
                 if c == None:
                     worning_flag = True
 
@@ -166,7 +242,7 @@ class GraphApp(ctk.CTk):
                 self.treeview.column(col, width=100, anchor='w')   #anchor='w'で左寄せ
             
             #データの挿入 (parent="", index="end")
-            for r in records:
+            for r in self.records:
                 # 辞書型(values)をリスト変換して渡す
                 # values = [r.get(col, "-") for col in columns] r.get(col)で取得できなかった時"-"を入れるという処理⇒失敗
                 values = [r.get(col) if r.get(col) is not None else "-" for col in columns]
@@ -179,6 +255,10 @@ class GraphApp(ctk.CTk):
                         values.append(r.get(-)) ←rに値がなければ-をlistに追加
                 """
                 self.treeview.insert("", "end", values=list(values))
+            
+            self.x_axis_conbobox.configure(values=key_list)
+            self.y_axis_conbobox.configure(values=data_list)
+
 
 
     # ×ボタン押下による終了時にグラフ描画処理が残ってしまうのでここで終了させる
