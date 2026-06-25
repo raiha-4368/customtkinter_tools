@@ -29,14 +29,16 @@ def read_csv_file(filepath):
     ファイルパスを受け取り、csvファイルを読み込み、その配列を返す。
     """
     records = []
+    keys = []
     if not os.path.exists(filepath):
-        return records
+        return records, keys
 
     with open(filepath,newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
+        keys = reader.fieldnames
         for row in reader:
             records.append(row)
-    return records
+    return records, keys
 # *********************************************************************************
 
 # ファイル書き込み系

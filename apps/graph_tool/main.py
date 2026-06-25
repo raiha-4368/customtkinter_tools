@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import customtkinter as ctk
 from common import dialogs,files
 from matplotlib.figure import Figure
@@ -67,6 +67,7 @@ class GraphApp(ctk.CTk):
         self.records = []
         self.data_list = []
         self.key_list = []
+        self.vertical_list = []
         self.graph_type = ""
 
         # -------------------------
@@ -77,23 +78,29 @@ class GraphApp(ctk.CTk):
 
         self.graph_conbobox = ctk.CTkComboBox(self.side_frame, values=["折れ線グラフ", "散布図","円グラフ","ヒストグラム"], command=self.graph_chenge, state="readonly")
         self.graph_conbobox.grid(row=2, pady=(10,10), padx=(10,10))
+        self.graph_conbobox.set("折れ線グラフ")
 
-        label = ctk.CTkLabel(self.side_frame, text="x(横)軸選択")
+        label = ctk.CTkLabel(self.side_frame, text="x(横)軸選択\n※x軸は文字列として扱う")
         label.grid(row=3, pady=(10,10), padx=(10,10))
 
         # x(横)軸
-        self.x_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["default(カラム行)"], command=None, state="readonly")
+        self.x_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["未設定"], command=None, state="readonly")
         self.x_axis_conbobox.grid(row=4, pady=(10,10), padx=(10,10))
+        self.x_axis_conbobox.set("未設定")
 
-        label2 = ctk.CTkLabel(self.side_frame, text="y(縦)軸選択")
+        label2 = ctk.CTkLabel(self.side_frame, text="y(縦)軸選択\ny軸は数値のみを扱う")
         label2.grid(row=5, pady=(10,10), padx=(10,10))
 
         # y(縦)軸
-        self.y_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["default(all)"], command=None, state="readonly")
+        self.y_axis_conbobox = ctk.CTkComboBox(self.side_frame, values=["未設定"], command=None, state="readonly")
         self.y_axis_conbobox.grid(row=6, pady=(10,10), padx=(10,10))
+        self.y_axis_conbobox.set("未設定")
 
         self.dir_select = ctk.CTkButton(self.side_frame, text="ファイルを選択",command=self.import_file)
         self.dir_select.grid(row=7, pady=(10,10), padx=(10,10))
+
+        self.graph_button = ctk.CTkButton(self.side_frame, text="グラフ描画",command=self.display_graph)
+        self.graph_button.grid(row=8, pady=(10,10), padx=(10,10))
 
         # サイドメニューの下部にモードチェンジ用セグメントボタンを配置
         segemented_button = ctk.CTkSegmentedButton(self.side_frame, values=["System", "Dark", "Light"],
@@ -110,12 +117,15 @@ class GraphApp(ctk.CTk):
         self.tab = ctk.CTkTabview(self.content_frame)
         self.tab.pack(fill=tk.BOTH, expand=True)
 
-        self.tab_graph = self.tab.add("グラフ")
         self.tab_data = self.tab.add("データ")
+        self.tab_graph = self.tab.add("グラフ")
 
         # グラフ描画
         self.fig = Figure(figsize=(5,4), dpi=100)
         self.ax = self.fig.add_subplot(111)
+
+        self.label1 = ctk.CTkLabel(self.tab_graph, text="")
+        self.label1.pack()
 
         self.canvas = FigureCanvasTkAgg(self.fig, master=self.tab_graph)
         self.canvas_widget = self.canvas.get_tk_widget()
@@ -129,12 +139,19 @@ class GraphApp(ctk.CTk):
         scrollbar = ttk.Scrollbar(self.main_frame, orient="vertical", command=self.treeview.yview)
         self.treeview.configure(yscrollcommand=scrollbar.set)
 
-    def axis_choice(self, choice):
-        x_axis = self.x_axis_conbobox.get()
-        y_axis = self.y_axis_conbobox.get()
+    def axis_choice(self):
+        self.x_axis = self.x_axis_conbobox.get()
+        self.y_axis = self.y_axis_conbobox.get()
+
+    def set_axis_conbobox(self):
+        
+        values = ["未設定"]
+        values.extend(self.vertical_list.keys())
+        self.x_axis_conbobox.configure(values=values)
+        self.y_axis_conbobox.configure(values=values)
 
 
-    # コンボボックス選択時
+    # グラフ選択コンボボックス選択時
     def graph_chenge(self, choice):
         self.display_graph()
 
@@ -142,11 +159,25 @@ class GraphApp(ctk.CTk):
     def display_graph(self):
         print("グラフ描画")
 
-        # 現在のコンボボックスの選択を取得
-        self.graph_type = self.graph_conbobox.get()
-        print(self.graph_type)
+        try:
+            
+            # 現在のコンボボックスの選択を取得
+            self.graph_type = self.graph_conbobox.get()
+            if not self.graph_type:
+                messagebox.showerror("エラー","グラフが選択されていません。")
+                return
 
-        if self.data_list and self.key_list:
+            print(f"グラフタイプ:{self.graph_type}")
+            self.axis_choice()
+
+            # 軸設定を取得
+            print(f"x軸:{self.x_axis}")
+            print(f"y軸:{self.y_axis}")
+            if self.y_axis == "未設定":
+                messagebox.showerror("エラー", "y軸を選択してください")
+
+
+
             # グラフ設定
             # グラフのclear処理
             self.ax.clear()
@@ -154,68 +185,97 @@ class GraphApp(ctk.CTk):
             # 円グラフ処理を実行するとグラフのアスペクト比が縦長に変更されてしまう
             # そのため、ここでそのアスペクト比を初期化する
             self.ax.set_aspect("auto", adjustable="datalim")
+            x_data = []
+            y_data = []
+            print(f"key_list:{self.key_list}")
+            for key in self.vertical_list:
+                # x軸設定の一致を確認
+                if key == self.x_axis:
+                    x_data = self.vertical_list[key]
+                if key == self.y_axis:
+                    y_data =[int(x) for x in self.vertical_list[key]] 
 
-            if self.graph_type == "折れ線グラフ":
-                self.ax.plot(self.key_list, self.data_list, label=f"{self.key_list}")
+            if self.graph_type == "折れ線グラフ":                
+                self.label1.configure(text="y軸の設定を折れ線グラフで表示します。")
 
-                self.ax.set_title(f"Display: 折れ線グラフ\npaht :{self.filepath}")
-                # 凡例表示
-                self.ax.legend()
+                if x_data and y_data:
+                    self.ax.plot(x_data, y_data, label=f"{x_data}")
+                    self.ax.set_title(f"Display: 折れ線グラフ\npaht :{self.filepath}")
+                    # 凡例表示
+                    self.ax.legend()
 
+            # ヒストグラムは数値とした扱うy軸のみを使う
             elif self.graph_type ==  "ヒストグラム":
+                self.label1.configure(text="y軸の設定をヒストグラムで表示します。")
                 # サンプルデータ
                 # data = np.random.normal(loc=50, scale=10, size=100)
 
                 # ヒストグラム描画
-                self.ax.hist(self.data_list,bins=20, label=f"{self.key_list}")
+                self.ax.hist(y_data,bins=20, label=f"{y_data}")
                 self.ax.set_title(f"Display: ヒストグラム\npaht :{self.filepath}")
                 # 凡例表示
                 self.ax.legend()
+
             elif self.graph_type == "散布図":
-                self.ax.scatter(self.key_list, self.data_list, label=f"{self.key_list}")
+                self.label1.configure(text="y軸の設定を散布図で表示します。")
+
+                self.ax.scatter(x_data, y_data, label=f"")
                 self.ax.set_title(f"Display: 散布図\npaht :{self.filepath}")
                 # 凡例表示
                 self.ax.legend()
             elif self.graph_type == "円グラフ":
+                self.label1.configure(text="y軸の設定を円グラフで表示します。")
                 # autopct="%1.1f%%で パーセントを自動計算し表示
                 # もし、パーセントだけでなく実際の数値も表示したい場合は自分で計算処理を入れる必要がある
-                self.ax.pie(self.data_list,labels=self.key_list, autopct="%1.1f%%")
+                self.ax.pie(y_data,labels=y_data, autopct="%1.1f%%")
                 self.ax.set_title(f"Display: 円グラフ\npaht :{self.filepath}")
                 # 円グラフでは凡例を表示しない
 
             else:
                 pass
 
-            # キャンバスの更新
-            self.canvas.draw()
-                   
+            if self.graph_type:
+                # キャンバスの更新
+                self.canvas.draw()
+
+        except Exception as e:
+            messagebox.showerror("エラー","y軸に文字列を含めることは出来ません。")
+      
 
     def import_file(self):
-
-        key_list =["default(カラム行)"]
-        data_list =["default(all)"]
 
         self.filepath = dialogs.select_file(
                 title="csvファイルを選択してください", 
                 filetypes=[(("csv Files","*.csv"))])
         if self.filepath:
+            # 初期化
+            # カラム行
+            self.key_list = []
+            # 縦一列
+            self.vertical_list = {}
+
+
             # commonでの読み込み
-            self.records = files.read_csv_file(self.filepath)
+            self.records, self.key_list = files.read_csv_file(self.filepath)
 
-            for row in self.records:
-                print(row)
 
-                # 回数も数えてる(一応)
-                for i, key in enumerate(row, start=1):
-                    print(row[key])
-                    self.key_list.append(key)
-                    key_list.append(key)
-                    self.data_list.append(int((row[key])))
-                    data_list.append((row[key]))
-            # print(data_list)
+            print("縦列設定")
+            for key in self.key_list:
+                tate_list = []
+                for row in self.records:
+                    print(f"key:{key}")
+                    print(f"取得:{row}")
+                    print(f"key取得:{row[key]}")
+                    tate_list.append(row[key])
+                print("縦格納")
+                print(tate_list)
+                self.vertical_list[key] = tate_list
 
-            self.display_graph()
-            
+            print("最終取り出し")
+            for r in self.vertical_list:
+                print(self.vertical_list[r])
+
+            # データタブ用のツリービュー表示            
             #1 既存データをすべて削除
             for item in self.treeview.get_children():
                 self.treeview.delete(item)
@@ -256,9 +316,8 @@ class GraphApp(ctk.CTk):
                 """
                 self.treeview.insert("", "end", values=list(values))
             
-            self.x_axis_conbobox.configure(values=key_list)
-            self.y_axis_conbobox.configure(values=data_list)
-
+            self.set_axis_conbobox()
+            self.display_graph()
 
 
     # ×ボタン押下による終了時にグラフ描画処理が残ってしまうのでここで終了させる
